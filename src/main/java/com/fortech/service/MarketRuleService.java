@@ -20,33 +20,34 @@ public class MarketRuleService {
 	private EntityManager entityManager;
 	
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-	public void insertMarketRuleInDatabase(MarketRule MarketRule) {
+	public void insertInDatabase(MarketRule marketRule) {
 		entityManager.getTransaction().begin();
-		entityManager.persist(MarketRule);
+		entityManager.persist(marketRule);
+		entityManager.getTransaction().commit();
+		
+	}
+
+	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+	public void updateInDatabase(MarketRule marketRule) {
+		entityManager.getTransaction().begin();
+		entityManager.merge(marketRule);
 		entityManager.getTransaction().commit();
 	}
 
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-	public void updateMarketRuleInDatabase(MarketRule MarketRule) {
-		entityManager.getTransaction().begin();
-		entityManager.merge(MarketRule);
-		entityManager.getTransaction().commit();
-	}
-
-	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-	public void deleteMarketRuleFromDatabase(MarketRulePK marketRulePK) {
+	public void deleteFromDatabase(MarketRulePK marketRulePK) {
 		entityManager.getTransaction().begin();
 		entityManager.remove(entityManager.find(MarketRule.class, marketRulePK));
 		entityManager.getTransaction().commit();
 	}
 	
-	public List<MarketRule> getAllMarketRule(){
+	public List<MarketRule> getAll(){
 		@SuppressWarnings("unchecked")
 		TypedQuery<MarketRule> marketQuery = (TypedQuery<MarketRule>) entityManager.createNamedQuery(MarketRule.MARKETRULE_FIND_ALL);		
 		return marketQuery.getResultList();
 	}
 	
-	public MarketRule findByIdMarketRule(MarketRulePK marketRulePK){
+	public MarketRule findById(MarketRulePK marketRulePK){
 		return entityManager.find(MarketRule.class, marketRulePK);
 	}
 	

@@ -19,34 +19,34 @@ public class MappingRuleService {
 	private EntityManager entityManager;
 
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-	public void insertMappingRuleInDatabase(MappingRule mappingRule) {
+	public void insertInDatabase(MappingRule mappingRule) {
 		entityManager.getTransaction().begin();
 		entityManager.persist(mappingRule);
 		entityManager.getTransaction().commit();
 	}
 
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-	public void updateMappingRuleInDatabase(MappingRule mappingRule) {
+	public void updateInDatabase(MappingRule mappingRule) {
 		entityManager.getTransaction().begin();
 		entityManager.merge(mappingRule);
 		entityManager.getTransaction().commit();
 	}
 
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-	public void deleteMappingRuleFromDatabase(int idMappingRule) {
+	public void deleteFromDatabase(int idMappingRule) {
 		entityManager.getTransaction().begin();
 		entityManager.remove(entityManager.find(MappingRule.class, idMappingRule));
 		entityManager.getTransaction().commit();
 	}
 
-	public List<MappingRule> getAllMappingRule() {
+	public List<MappingRule> getAll() {
 		@SuppressWarnings("unchecked")
 		TypedQuery<MappingRule> typedQuery = (TypedQuery<MappingRule>) entityManager.createNamedQuery(MappingRule.FIND_ALL_MAPPING_RULE);
 
 		return typedQuery.getResultList();
 	}
 	
-	public MappingRule findByIdMappingRule(int idMappingRule) {
+	public MappingRule findById(int idMappingRule) {
 		return entityManager.find(MappingRule.class, idMappingRule);
 	}
 	

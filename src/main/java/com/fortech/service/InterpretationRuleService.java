@@ -19,34 +19,34 @@ public class InterpretationRuleService {
 	private EntityManager entityManager;
 	
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-	public void insertInterpretationRuleInDatabase(InterpretationRule InterpretationRule) {
+	public void insertInDatabase(InterpretationRule interpretationRule) {
 		entityManager.getTransaction().begin();
-		entityManager.persist(InterpretationRule);
+		entityManager.persist(interpretationRule);
 		entityManager.getTransaction().commit();
 	}
 
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-	public void updateInterpretationRuleInDatabase(InterpretationRule InterpretationRule) {
+	public void updateInDatabase(InterpretationRule interpretationRule) {
 		entityManager.getTransaction().begin();
-		entityManager.merge(InterpretationRule);
+		entityManager.merge(interpretationRule);
 		entityManager.getTransaction().commit();
 	}
 
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-	public void deleteInterpretationRuleFromDatabase(int idInterpretationRule) {
+	public void deleteFromDatabase(int idInterpretationRule) {
 		entityManager.getTransaction().begin();
 		entityManager.remove(entityManager.find(InterpretationRule.class, idInterpretationRule));
 		entityManager.getTransaction().commit();
 	}
 
-	public List<InterpretationRule> getAllMappingRule() {
+	public List<InterpretationRule> getAll() {
 		@SuppressWarnings("unchecked")
 		TypedQuery<InterpretationRule> typedQuery = (TypedQuery<InterpretationRule>) entityManager.createNamedQuery(InterpretationRule.FIND_ALL_INTERPRETATION_RULE);
 
 		return typedQuery.getResultList();
 	}
 	
-	public InterpretationRule findByIdMappingRule(int idMappingRule) {
-		return entityManager.find(InterpretationRule.class, idMappingRule);
+	public InterpretationRule findById(int idInterpretationRule) {
+		return entityManager.find(InterpretationRule.class, idInterpretationRule);
 	}
 }

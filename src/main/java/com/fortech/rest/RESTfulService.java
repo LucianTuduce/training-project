@@ -20,5 +20,7 @@ public class RESTfulService {
 
 	@EJB
 	private InterpretationRuleService interpretationRuleService;
+	
 
+	
 }
