@@ -12,8 +12,10 @@ import java.util.List;
 @Table(name = "\"InterpretationRule\"", schema="DARIAD")
 @NamedQuery(name = "InterpretationRule.findAll", query = "SELECT i FROM InterpretationRule i")
 public class InterpretationRule implements Serializable {
+	
 	private static final long serialVersionUID = 1L;
-
+	public static final String FIND_ALL_INTERPRETATION_RULE = "InterpretationRule.findAll";
+	
 	@Id
 	@Column(name = "\"id\"", unique = true, nullable = false)
 	private int id;

@@ -13,6 +13,8 @@ import javax.persistence.*;
 @NamedQuery(name="MappingRule.findAll", query="SELECT m FROM MappingRule m")
 public class MappingRule implements Serializable {
 	private static final long serialVersionUID = 1L;
+	
+	public static final String FIND_ALL_MAPPING_RULE = "MappingRule.findAll";
 
 	@Id
 	@Column(name="\"id\"", unique=true, nullable=false)
