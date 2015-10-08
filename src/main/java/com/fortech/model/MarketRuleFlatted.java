@@ -2,7 +2,7 @@ package com.fortech.model;
 
 import com.fortech.enums.StockCategory;
 
-public class MarketRuleFlatter {
+public class MarketRuleFlatted {
 	private String countryNumber;
 	private int branch;
 	private StockCategory stockCategory;
