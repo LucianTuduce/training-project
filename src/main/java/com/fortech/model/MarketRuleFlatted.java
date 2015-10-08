@@ -2,6 +2,14 @@ package com.fortech.model;
 
 import com.fortech.enums.StockCategory;
 
+/**
+ * The equivalent class for the MarketRule class, with the difference of the
+ * stockCategory type which is of type Enumeration and of active which is of
+ * type Boolean.
+ * 
+ * @author dariad
+ *
+ */
 public class MarketRuleFlatted {
 	private String countryNumber;
 	private int branch;

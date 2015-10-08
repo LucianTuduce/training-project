@@ -7,6 +7,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import com.fortech.model.InterpretationRule;
 
+/**
+ * The JAXB equivalent of the TargetVehicle. This class is used in order to
+ * get the XML form of the class.
+ * 
+ * @author lucian.tuduce
+ *
+ */
 @XmlRootElement(name = "TargetVehicleJAXB")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class TargetVehicleJAXB {

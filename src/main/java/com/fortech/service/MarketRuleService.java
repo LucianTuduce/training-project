@@ -12,13 +12,28 @@ import javax.persistence.TypedQuery;
 import com.fortech.model.MarketRule;
 import com.fortech.model.MarketRulePK;
 
+/**
+ * Service class for the MarketRule.
+ * @author lucian.tuduce
+ *
+ */
 @Stateless
 @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 public class MarketRuleService {
 
+	/**
+	 * The object that will manage the connection with the
+	 * database and perform the CRUD operations on the rule.
+	 */
 	@PersistenceContext
 	private EntityManager entityManager;
 	
+	/**
+	 * Method used in order to insert a MarketRule in the database.
+	 * 
+	 * @param marketRule
+	 *            the rule that will be added in the database
+	 */
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public void insertInDatabase(MarketRule marketRule) {
 		entityManager.getTransaction().begin();
@@ -27,6 +42,13 @@ public class MarketRuleService {
 		
 	}
 
+	/**
+	 * Method used in order to update an existing MarketRule in the
+	 * database.
+	 * 
+	 * @param marketRule
+	 *            the object with the new values that the rule will have
+	 */
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public void updateInDatabase(MarketRule marketRule) {
 		entityManager.getTransaction().begin();
@@ -34,6 +56,13 @@ public class MarketRuleService {
 		entityManager.getTransaction().commit();
 	}
 
+	/**
+	 * Method used in order to delete an MarketRule in the database.
+	 * 
+	 * @param marketRulePK
+	 *            the id of the rule that will be deleted. The id is
+	 *            a composed primary key.
+	 */
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public void deleteFromDatabase(MarketRulePK marketRulePK) {
 		entityManager.getTransaction().begin();
@@ -41,12 +70,28 @@ public class MarketRuleService {
 		entityManager.getTransaction().commit();
 	}
 	
+	/**
+	 * Method used to get all the MarketRules that are present in the
+	 * database
+	 * 
+	 * @return list with all the rules in the database
+	 */
 	public List<MarketRule> getAll(){
 		@SuppressWarnings("unchecked")
 		TypedQuery<MarketRule> marketQuery = (TypedQuery<MarketRule>) entityManager.createNamedQuery(MarketRule.MARKETRULE_FIND_ALL);		
 		return marketQuery.getResultList();
 	}
 	
+	/**
+	 * Method used in order to get a MappingRule from the database based
+	 * on an id
+	 * 
+	 * @param idMappingRule
+	 *            id of the rule that will be obtained from the database.The id is
+	 *            a composed primary key.
+	 *            
+	 * @return the rule that will have the id as the parameter of the method
+	 */
 	public MarketRule findById(MarketRulePK marketRulePK){
 		return entityManager.find(MarketRule.class, marketRulePK);
 	}

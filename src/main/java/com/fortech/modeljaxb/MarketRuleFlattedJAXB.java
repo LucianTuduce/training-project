@@ -7,9 +7,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import com.fortech.enums.StockCategory;
 
+/**
+ * The JAXB equivalent of the MarketRuleFlatted. This class is used in order to
+ * get the XML form of the class.
+ * 
+ * @author lucian.tuduce
+ *
+ */
 @XmlRootElement(name = "MarketRuleConvertedJAXB")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class MarketRuleConvertedJAXB {
+public class MarketRuleFlattedJAXB {
 
 	@XmlElement(required = true)
 	private String countryNumber;
@@ -61,5 +68,5 @@ public class MarketRuleConvertedJAXB {
 	public void setRule(String rule) {
 		this.rule = rule;
 	}
-	
+
 }

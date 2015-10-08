@@ -7,7 +7,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import com.fortech.enums.StockCategory;
 
-
+/**
+ * The JAXB equivalent of the MarketRule. This class is used in order to get the
+ * XML form of the class.
+ * 
+ * @author lucian.tuduce
+ *
+ */
 @XmlRootElement(name = "MarketRuleJAXB")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class MarketRuleJAXB {
