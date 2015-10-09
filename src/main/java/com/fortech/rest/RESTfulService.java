@@ -1,12 +1,19 @@
 package com.fortech.rest;
 
+import java.util.List;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
+
+
+import com.fortech.model.MarketRule;
 import com.fortech.service.InterpretationRuleService;
 import com.fortech.service.MappingRuleService;
 import com.fortech.service.MarketRuleService;
@@ -43,5 +50,12 @@ public class RESTfulService {
 			return Response.status(200).entity("Deleted interpretation rule with id: "+ id).build();
 		}
 		return Response.status(500).entity("FAILED to delete rule").build();
+	}
+	
+	@GET
+	@Path("/all")
+	@Produces("application/json")
+	public List<MarketRule> getAllRules(){
+		return marketRuleService.getAll();
 	}
 }
