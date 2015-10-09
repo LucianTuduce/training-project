@@ -70,8 +70,7 @@ public class MarketRuleService {
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public void deleteFromDatabase(MarketRulePK marketRulePK) {
 		entityManager.getTransaction().begin();
-		entityManager
-				.remove(entityManager.find(MarketRule.class, marketRulePK));
+		entityManager.remove(entityManager.find(MarketRule.class, marketRulePK));
 		entityManager.getTransaction().commit();
 	}
 
