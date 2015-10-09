@@ -15,23 +15,19 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Response;
 
 import com.fortech.convertor.WrapperRuleFlattener;
-import com.fortech.modeljaxb.MappingRuleJAXB;
 import com.fortech.modeljaxb.MarketRuleJAXB;
 import com.fortech.modeljaxb.WrapperRuleJAXB;
 
-import com.fortech.model.MarketRule;
 import com.fortech.service.InterpretationRuleService;
 import com.fortech.service.MappingRuleService;
 import com.fortech.service.MarketRuleService;
-import com.fortech.wrapper.WrapperRule;
 
 @Stateless
 @Path("/rest")
-public class RESTfulService extends Application {
+public class RESTfulService {
 
 	@EJB
 	private MarketRuleService marketRuleService;
@@ -60,7 +56,6 @@ public class RESTfulService extends Application {
 
 		List<WrapperRuleJAXB> rules = new ArrayList<WrapperRuleJAXB>();
 		List<MarketRuleJAXB> marketRuleJaxB = new ArrayList<MarketRuleJAXB>();
-		List<MappingRuleJAXB> mappingRuleJaxB = new ArrayList<MappingRuleJAXB>();
 
 		marketRuleJaxB = marketRuleService.getAllMarketRule();
 		if (xmlORjson.equals("xml")) {
@@ -75,21 +70,6 @@ public class RESTfulService extends Application {
 						.createJSONWrapperRuleForMarketRule(market));
 			}
 		}
-
-		// mappingRuleJaxB = mappingRuleService.getAllMappingRule();
-		// if (xmlORjson.equals("xml")) {
-		// for (MappingRuleJAXB mapping : mappingRuleJaxB) {
-		// rules.add(WrapperRuleFlattener
-		// .createXMLWrapperRuleForMappingRuleJAXB(mapping));
-		// }
-		//
-		// } else if (xmlORjson.equals("json")) {
-		// for (MarketRuleJAXB market : marketRuleJaxB) {
-		// rules.add(WrapperRuleFlattener
-		// .createJSONWrapperRuleForMappingRule(mapping));
-		// }
-		// }
-
 		return rules;
 	}
 
@@ -111,11 +91,4 @@ public class RESTfulService extends Application {
 		}
 		return Response.status(500).entity("FAILED to delete rule").build();
 	}
-//	
-//	@GET
-//	@Path("/all")
-//	@Produces("application/json")
-//	public List<MarketRule> getAllRules(){
-//		return marketRuleService.getAllMarketRule();
-//	}
 }

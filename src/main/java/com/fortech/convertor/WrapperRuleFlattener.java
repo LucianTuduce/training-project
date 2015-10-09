@@ -3,7 +3,6 @@ package com.fortech.convertor;
 import javax.xml.bind.JAXBException;
 
 import com.fortech.enums.RuleType;
-import com.fortech.modeljaxb.MappingRuleJAXB;
 import com.fortech.modeljaxb.MarketRuleJAXB;
 import com.fortech.modeljaxb.WrapperRuleJAXB;
 import com.fortech.transform.MarketRuleTrsFromToJson;

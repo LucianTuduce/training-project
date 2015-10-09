@@ -1,7 +1,6 @@
 package com.fortech.service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.ejb.Stateless;
