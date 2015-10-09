@@ -2,8 +2,7 @@ package com.fortech.convertor;
 
 import com.fortech.enums.StockCategory;
 
-public class MarkeRuleConvertor {
-	public class MarketRuleConvertor {
+public class MarketRuleConvertor {
 
 		public StockCategory changeShortToEnum(short rule) {
 
@@ -57,5 +56,5 @@ public class MarkeRuleConvertor {
 
 			return 0;
 		}
-	}
 }
+

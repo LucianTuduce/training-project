@@ -4,3 +4,4 @@
 persistence.xml
 orm.xml
 /target/
+/bin/
