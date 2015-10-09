@@ -10,7 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
-import com.fortech.convertor.MarketRuleConvertor;
+import com.fortech.convertor.MarketRuleFlattener;
 import com.fortech.model.MarketRule;
 import com.fortech.model.MarketRulePK;
 import com.fortech.modeljaxb.MarketRuleJAXB;
@@ -91,7 +91,7 @@ public class MarketRuleService {
 		List<MarketRuleJAXB> marketRulesC = new ArrayList<MarketRuleJAXB>();
 		MarketRulePK markPK = new MarketRulePK();
 
-		MarketRuleConvertor chg = new MarketRuleConvertor();
+		MarketRuleFlattener chg = new MarketRuleFlattener();
 
 		for (MarketRule i : marketRules) {
 			markPK = i.getId();
