@@ -5,6 +5,13 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ * The JAXB equivalent of the MappingRule. This class is used in order to get
+ * the XML form of the class.
+ * 
+ * @author lucian.tuduce
+ *
+ */
 @XmlRootElement(name = "MappingRuleJAXB")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class MappingRuleJAXB {
@@ -14,7 +21,7 @@ public class MappingRuleJAXB {
 
 	@XmlElement(required = true)
 	private String sourceValue;
-	
+
 	@XmlElement(required = true)
 	private String targetValue;
 
@@ -52,11 +59,11 @@ public class MappingRuleJAXB {
 	public void setVehicleAttribute(String vehicleAttribute) {
 		this.vehicleAttribute = vehicleAttribute;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "[ "+id+" "+vehicleAttribute+" "+sourceValue+" "+targetValue+" ]";
+		return "[ " + id + " " + vehicleAttribute + " " + sourceValue + " "
+				+ targetValue + " ]";
 	}
-
 
 }

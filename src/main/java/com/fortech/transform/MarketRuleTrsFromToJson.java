@@ -6,7 +6,7 @@ import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
-import com.fortech.model.MarketRuleConverted;
+import com.fortech.model.MarketRuleFlatted;
 import com.fortech.modeljaxb.MarketRuleJAXB;
 
 /**
@@ -22,11 +22,11 @@ public class MarketRuleTrsFromToJson {
 	 */
 	public static MarketRuleJAXB transfromJson(String json) {
 
-		MarketRuleConverted marketJson = new MarketRuleConverted();
+		MarketRuleFlatted marketJson = new MarketRuleFlatted();
 		ObjectMapper objectMapper = new ObjectMapper();
 
 		try {
-			marketJson = objectMapper.readValue(json, MarketRuleConverted.class);
+			marketJson = objectMapper.readValue(json, MarketRuleFlatted.class);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

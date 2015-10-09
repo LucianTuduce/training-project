@@ -5,6 +5,13 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+/**
+ * The JAXB equivalent of the InterpretationInnerRule. This class is used in
+ * order to get the XML form of the class.
+ * 
+ * @author lucian.tuduce
+ *
+ */
 @XmlRootElement(name = "InterpretationInnerRuleJAXB")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class InterpretationInnerRuleJAXB {
@@ -52,7 +59,5 @@ public class InterpretationInnerRuleJAXB {
 	public void setVehicleAttributeValues(String vehicleAttributeValues) {
 		this.vehicleAttributeValues = vehicleAttributeValues;
 	}
-	
+
 }
-
-

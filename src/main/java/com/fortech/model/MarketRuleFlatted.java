@@ -1,25 +1,20 @@
-package com.fortech.modeljaxb;
-
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
+package com.fortech.model;
 
 import com.fortech.enums.StockCategory;
 
-@XmlRootElement(name = "MarketRuleConvertedJAXB")
-@XmlAccessorType(XmlAccessType.FIELD)
-public class MarketRuleConvertedJAXB {
-
-	@XmlElement(required = true)
+/**
+ * The equivalent class for the MarketRule class, with the difference of the
+ * stockCategory type which is of type Enumeration and of active which is of
+ * type Boolean.
+ * 
+ * @author dariad
+ *
+ */
+public class MarketRuleFlatted {
 	private String countryNumber;
-	@XmlElement(required = true)
 	private int branch;
-	@XmlElement(required = true)
 	private StockCategory stockCategory;
-	@XmlElement(required = true)
 	private Boolean active;
-	@XmlElement(required = true)
 	private String rule;
 
 	public String getCountryNumber() {
@@ -61,5 +56,4 @@ public class MarketRuleConvertedJAXB {
 	public void setRule(String rule) {
 		this.rule = rule;
 	}
-	
 }
