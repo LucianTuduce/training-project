@@ -75,18 +75,17 @@ public class MarketRuleService {
 	}
 
 
-
-
 	/**
 	 * Method used to get all the MarketRules that are present in the
 	 * database
 	 * 
 	 * @return list with all the rules in the database
 	 */
-	public List<MarketRule> getAll(){
+	public List<MarketRuleJAXB> getAllMarketRule(){
 		@SuppressWarnings("unchecked")
 		TypedQuery<MarketRule> marketQuery = (TypedQuery<MarketRule>) entityManager.createNamedQuery(MarketRule.MARKETRULE_FIND_ALL);
-		List<MarketRule> marketRules = new ArrayList<MarketRule>(marketQuery.getResultList());
+		List<MarketRule> marketRules = new ArrayList<MarketRule>(
+				marketQuery.getResultList());
 
 		List<MarketRuleJAXB> marketRulesC = new ArrayList<MarketRuleJAXB>();
 		MarketRulePK markPK = new MarketRulePK();
@@ -106,7 +105,7 @@ public class MarketRuleService {
 
 		}
 
-		return marketRules;
+		return marketRulesC;
 	}
 	
 	/**

@@ -1,5 +1,6 @@
 package com.fortech.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -10,6 +11,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import com.fortech.model.MappingRule;
+import com.fortech.modeljaxb.MappingRuleJAXB;
 
 /**
  * Service class for the MappingRule.
@@ -73,12 +75,29 @@ public class MappingRuleService {
 	 * 
 	 * @return list with all the rules in the database
 	 */
-	public List<MappingRule> getAll() {
+	public List<MappingRuleJAXB> getAllMappingRule() {
 		@SuppressWarnings("unchecked")
 		TypedQuery<MappingRule> typedQuery = (TypedQuery<MappingRule>) entityManager.createNamedQuery(MappingRule.FIND_ALL_MAPPING_RULE);
 
-		return typedQuery.getResultList();
+		List<MappingRule> mappingRule = new ArrayList<MappingRule>(typedQuery.getResultList());
+		
+		List<MappingRuleJAXB> mappingRulesJaxB = new ArrayList<MappingRuleJAXB>();
+		
+		for (MappingRule i : mappingRule) {
+			
+			MappingRuleJAXB j = new MappingRuleJAXB();
+			j.setId(i.getId());
+			j.setSourceValue(i.getSourceValue());
+			j.setTargetValue(i.getTargetValue());
+			j.setVehicleAttribute(i.getVehicleAttribute());
+			
+			mappingRulesJaxB.add(j);
+
+		}
+
+		return mappingRulesJaxB;
 	}
+	
 	
 	/**
 	 * Method used in order to get a MappingRule from the database based
