@@ -22,6 +22,8 @@ public class XmlJsonConvertor {
 		if(wrapperRuleJAXB.getRuleType().equals(RuleType.MARKET)){
 			try {
 				return getStringMarshaledMarketRule(getUnmarshaledMarketRuleJAXB(wrapperRuleJAXB));
+			} catch (PropertyException e) {
+				e.printStackTrace();
 			} catch (JAXBException e) {
 				e.printStackTrace();
 			}
