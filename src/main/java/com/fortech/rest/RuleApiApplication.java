@@ -42,7 +42,7 @@ public class RuleApiApplication extends Application{
 	@GET
 	@Path("/{xmlORjson}/{ruleType}")
 	@Produces({ "application/xml", "application/json" })
-	public List<WrapperRule> getRules(
+	public List<Object> getRules(
 			@PathParam("xmlORjson") String xmlORjson,
 			@PathParam("ruleType") String ruleType) {
 
