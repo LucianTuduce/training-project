@@ -1,7 +1,11 @@
 package com.fortech.convertor;
 
 import com.fortech.enums.StockCategory;
-
+/**
+ * 
+ * @author dariad
+ *
+ */
 public class MarketRuleFlattener {
 
 	public StockCategory changeShortToEnum(short rule) {

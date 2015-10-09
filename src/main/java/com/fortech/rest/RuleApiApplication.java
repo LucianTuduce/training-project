@@ -15,5 +15,10 @@ import javax.ws.rs.core.Application;
 @ApplicationPath("/car")
 public class RuleApiApplication extends Application{
 
+<<<<<<< HEAD
  
 }
+=======
+	
+}
+>>>>>>> branch 'master' of https://github.com/LucianTuduce/training-project.git

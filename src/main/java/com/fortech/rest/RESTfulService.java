@@ -1,22 +1,40 @@
 package com.fortech.rest;
 
+<<<<<<< HEAD
 import java.util.ArrayList;
+=======
+>>>>>>> branch 'master' of https://github.com/LucianTuduce/training-project.git
 import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+<<<<<<< HEAD
+=======
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
+>>>>>>> branch 'master' of https://github.com/LucianTuduce/training-project.git
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+<<<<<<< HEAD
 import javax.ws.rs.core.Application;
+=======
+import javax.ws.rs.core.Response;
+>>>>>>> branch 'master' of https://github.com/LucianTuduce/training-project.git
 
+<<<<<<< HEAD
 import com.fortech.convertor.WrapperRuleFlattener;
 import com.fortech.modeljaxb.MappingRuleJAXB;
 import com.fortech.modeljaxb.MarketRuleJAXB;
 import com.fortech.modeljaxb.WrapperRuleJAXB;
+=======
+import com.fortech.model.MarketRule;
+import com.fortech.service.InterpretationRuleService;
+>>>>>>> branch 'master' of https://github.com/LucianTuduce/training-project.git
 import com.fortech.service.MappingRuleService;
 import com.fortech.service.MarketRuleService;
+import com.fortech.wrapper.WrapperRule;
 
 @Stateless
 @Path("/rest")
@@ -79,4 +97,28 @@ public class RESTfulService extends Application {
 		return rules;
 	}
 
+
+	@DELETE
+	@Path("/{ruleType}")
+	@Consumes({"application/xml","application/json"})
+	public Response deleteRuleFromDatavaseThatHasId(@PathParam("ruleType") String ruleType, String idRule){
+		if(ruleType.equals("mapping")){
+			mappingRuleService.deleteFromDatabase(Integer.parseInt(idRule));
+			return Response.status(200).entity("Deleted mapping rule with id: "+ idRule).build();
+		}else if(ruleType.equals("market")){
+			marketRuleService.deleteFromDatabase(marketRuleService.getMarketPK(idRule));
+			return Response.status(200).entity("Deleted market rule with id: "+ idRule).build();
+		}else if(ruleType.equals("interpretation")){
+			interpretationRuleService.deleteFromDatabase(Integer.parseInt(idRule));
+			return Response.status(200).entity("Deleted interpretation rule with id: "+ idRule).build();
+		}
+		return Response.status(500).entity("FAILED to delete rule").build();
+	}
+	
+	@GET
+	@Path("/all")
+	@Produces("application/json")
+	public List<MarketRule> getAllRules(){
+		return marketRuleService.getAll();
+	}
 }

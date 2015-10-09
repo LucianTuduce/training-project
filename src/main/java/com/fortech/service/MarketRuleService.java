@@ -1,6 +1,7 @@
 package com.fortech.service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -10,7 +11,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
-import com.fortech.convertor.MarketRuleConvertor;
+import com.fortech.convertor.MarketRuleFlattener;
 import com.fortech.model.MarketRule;
 import com.fortech.model.MarketRulePK;
 import com.fortech.modeljaxb.MarketRuleJAXB;
@@ -90,7 +91,7 @@ public class MarketRuleService {
 		List<MarketRuleJAXB> marketRulesC = new ArrayList<MarketRuleJAXB>();
 		MarketRulePK markPK = new MarketRulePK();
 
-		MarketRuleConvertor chg = new MarketRuleConvertor();
+		MarketRuleFlattener chg = new MarketRuleFlattener();
 
 		for (MarketRule i : marketRules) {
 			markPK = i.getId();
@@ -122,4 +123,13 @@ public class MarketRuleService {
 		return entityManager.find(MarketRule.class, marketRulePK);
 	}
 
+	public MarketRulePK getMarketPK(String idMarketPK){
+		List<String> idList = Arrays.asList(idMarketPK.split("."));
+		MarketRulePK marketRulePK = new MarketRulePK();
+		marketRulePK.setBranch(Integer.parseInt(idList.get(0)));
+		marketRulePK.setCountryNumber(idList.get(1));
+		marketRulePK.setStockCategory(Short.parseShort(idList.get(2)));
+		return marketRulePK;
+	}
+	
 }
