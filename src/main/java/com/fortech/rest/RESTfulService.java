@@ -102,7 +102,7 @@ public class RESTfulService extends Application {
 			mappingRuleService.deleteFromDatabase(Integer.parseInt(idRule));
 			return Response.status(200).entity("Deleted mapping rule with id: "+ idRule).build();
 		}else if(ruleType.equals("market")){
-			marketRuleService.deleteFromDatabase(marketRuleService.getMarketPK(idRule));
+			//marketRuleService.deleteFromDatabase(marketRuleService.getMarketPK(idRule));
 			return Response.status(200).entity("Deleted market rule with id: "+ idRule).build();
 		}else if(ruleType.equals("interpretation")){
 			
