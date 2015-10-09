@@ -19,7 +19,7 @@ import javax.ws.rs.core.Response;
 
 import com.fortech.convertor.WrapperRuleFlattener;
 import com.fortech.modeljaxb.MarketRuleJAXB;
-import com.fortech.modeljaxb.WrapperRuleJAXB;
+import com.fortech.wrapper.WrapperRuleJAXB;
 
 import com.fortech.service.InterpretationRuleService;
 import com.fortech.service.MappingRuleService;

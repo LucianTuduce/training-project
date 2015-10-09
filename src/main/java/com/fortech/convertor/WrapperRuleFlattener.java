@@ -4,7 +4,7 @@ import javax.xml.bind.JAXBException;
 
 import com.fortech.enums.RuleType;
 import com.fortech.modeljaxb.MarketRuleJAXB;
-import com.fortech.modeljaxb.WrapperRuleJAXB;
+import com.fortech.wrapper.WrapperRuleJAXB;
 import com.fortech.transform.MarketRuleTrsFromToJson;
 import com.fortech.transform.MarketRuleTrsFromToXML;
 
