@@ -3,5 +3,6 @@
 .classpath
 persistence.xml
 orm.xml
+META-INF
 /target/
 /bin/
