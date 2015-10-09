@@ -4,8 +4,6 @@ import javax.ejb.Stateless;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
-
-
 /**
  * Class that is used as a REST service class. In here the communication with
  * the web is made.
@@ -13,12 +11,6 @@ import javax.ws.rs.core.Application;
  */
 @Stateless
 @ApplicationPath("/car")
-public class RuleApiApplication extends Application{
+public class RuleApiApplication extends Application {
 
-<<<<<<< HEAD
- 
 }
-=======
-	
-}
->>>>>>> branch 'master' of https://github.com/LucianTuduce/training-project.git
