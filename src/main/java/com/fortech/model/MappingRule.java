@@ -63,5 +63,4 @@ public class MappingRule implements Serializable {
 	public void setVehicleAttribute(String vehicleAttribute) {
 		this.vehicleAttribute = vehicleAttribute;
 	}
-
 }
