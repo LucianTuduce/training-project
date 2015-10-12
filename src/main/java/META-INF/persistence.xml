@@ -16,7 +16,7 @@
 			<property name="javax.persistence.jdbc.url"
 				value="jdbc:db2://localhost:50000/SAMPLE:retrieveMessagesFromServerOnGetMessage=true;" />
 			<property name="javax.persistence.jdbc.user" value="lucian.tuduce" />
-			<property name="javax.persistence.jdbc.password" value="fotbalistu93" />
+			<property name="javax.persistence.jdbc.password" value="" />
 			<property name="javax.persistence.jdbc.driver" value="com.ibm.db2.jcc.DB2Driver" />
 		</properties>
 
