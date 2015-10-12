@@ -10,10 +10,11 @@ import com.fortech.transform.MarketRuleTrsFromToXML;
 
 
 /**
- * The class transform a Market/Mapping/InterpretationRuleJAXB into an object of
+ * The class transform a MarketJAXB/MappingJAXB/InterpretationRuleJAXB into an object of
  * WrapperRule
+
  
- * @author dariad
+ * @author lucian.tuduce
  *
  */
 public class WrapperRuleFlattener {
@@ -22,43 +23,29 @@ public class WrapperRuleFlattener {
 	 * The method creates an object WrapperRule(with the String jsonORxml in the
 	 * format xml that it's asked) from a marketRuleJAXB
 	 */
-	public static WrapperRuleJAXB createXMLWrapperRuleForMarketRuleJAXB(
-			MarketRuleJAXB marketRuleJaxB) {
+	public static WrapperRuleJAXB createXMLWrapperRuleFor(MarketRuleJAXB marketRuleJAXB) {
 
-		WrapperRuleJAXB wrapperRule = new WrapperRuleJAXB();
-
+		WrapperRuleJAXB marketWrapperRule = new WrapperRuleJAXB();
 		String jsonORxml = new String();
-
-		try {
-			jsonORxml = MarketRuleTrsFromToXML.transToXML(marketRuleJaxB);
-		} catch (JAXBException e) {
-			e.printStackTrace();
-		}
-
-		wrapperRule.setRuleType(RuleType.MARKET);
-		wrapperRule.setJsonORxml(jsonORxml);
-
-		return wrapperRule;
+		jsonORxml = XmlJsonStringConvertor.getXMLStringForRuleJAXB(marketRuleJAXB);
+		marketWrapperRule.setRuleType(RuleType.MARKET);
+		marketWrapperRule.setJsonORxml(jsonORxml);
+		return marketWrapperRule;
 	}
 	
 
-	/*
+	/**
 	 * The method creates an object WrapperRule(with the String jsonORxml in the
-	 * format json that it's asked) from a marketRuleJAXB
+	 * format json that it's asked) from a interpretationRuleJAXB
 	 */
-	public static WrapperRuleJAXB createJSONWrapperRuleForMarketRule(
-			MarketRuleJAXB marketRuleJaxB) {
+	public static WrapperRuleJAXB createJSONWrapperRuleFor(InterpretationRuleJAXB interpretationRuleJAXB) {
 
-		WrapperRuleJAXB wrapperRule = new WrapperRuleJAXB();
-
+		WrapperRuleJAXB interpretationWrapperRule = new WrapperRuleJAXB();
 		String jsonORxml = new String();
-
-		jsonORxml = MarketRuleTrsFromToJson.transToJson(marketRuleJaxB);
-
-		wrapperRule.setRuleType(RuleType.MARKET);
-		wrapperRule.setJsonORxml(jsonORxml);
-
-		return wrapperRule;
+		jsonORxml = XmlJsonStringConvertor.getJSONStringForRuleJAXB(interpretationRuleJAXB);
+		interpretationWrapperRule.setRuleType(RuleType.MARKET);
+		interpretationWrapperRule.setJsonORxml(jsonORxml);
+		return interpretationWrapperRule;
 	}
 
 	

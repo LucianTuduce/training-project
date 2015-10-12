@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+<persistence version="2.0"
+	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
 	<persistence-unit name="UVSRulesApi">
 		<class>com.fortech.model.InterpretationInnerRule</class>
 		<class>com.fortech.model.InterpretationRule</class>
@@ -12,11 +14,11 @@
 				value="database" />
 			<property name="eclipselink.jdbc.batch-writing" value="JDBC" />
 			<property name="javax.persistence.jdbc.url"
-				value="jdbc:db2://192.168.204.208:50000/SAMPLE:retrieveMessagesFromServerOnGetMessage=true;" />
-			<property name="javax.persistence.jdbc.user" value="db2admin" />
-			<property name="javax.persistence.jdbc.password" value="db2admin" />
+				value="jdbc:db2://localhost:50000/SAMPLE:retrieveMessagesFromServerOnGetMessage=true;" />
+			<property name="javax.persistence.jdbc.user" value="lucian.tuduce" />
+			<property name="javax.persistence.jdbc.password" value="fotbalistu93" />
 			<property name="javax.persistence.jdbc.driver" value="com.ibm.db2.jcc.DB2Driver" />
 		</properties>
-	
+
 	</persistence-unit>
 </persistence>

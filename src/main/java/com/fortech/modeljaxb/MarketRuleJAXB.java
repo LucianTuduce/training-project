@@ -6,6 +6,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import com.fortech.enums.StockCategory;
+import com.fortech.model.MarketRulePK;
 
 /**
  * The JAXB equivalent of the MarketRule. This class is used in order to get the
@@ -32,6 +33,17 @@ public class MarketRuleJAXB {
 
 	@XmlElement(required = true)
 	private String rule;
+
+	@XmlElement(required = true)
+	private MarketRulePK id;
+	
+	public MarketRulePK getId() {
+		return id;
+	}
+
+	public void setId(MarketRulePK id) {
+		this.id = id;
+	}
 
 	public String getCountryNumber() {
 		return countryNumber;
