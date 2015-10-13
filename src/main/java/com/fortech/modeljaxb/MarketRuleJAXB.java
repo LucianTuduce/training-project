@@ -5,7 +5,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.fortech.enums.StockCategory;
 import com.fortech.model.MarketRulePK;
 
 /**
@@ -20,75 +19,37 @@ import com.fortech.model.MarketRulePK;
 public class MarketRuleJAXB {
 
 	@XmlElement(required = true)
-	private String countryNumber;
-
+	private MarketRulePK id;
+	
 	@XmlElement(required = true)
-	private int branch;
-
-	@XmlElement(required = true)
-	private StockCategory stockCategory;
-
-	@XmlElement(required = true)
-	private boolean active;
+	private short active;
 
 	@XmlElement(required = true)
 	private String rule;
 
-	@XmlElement(required = true)
-	private MarketRulePK id;
 	
 	public MarketRulePK getId() {
-		return id;
+		return this.id;
 	}
 
 	public void setId(MarketRulePK id) {
 		this.id = id;
 	}
 
-	public String getCountryNumber() {
-		return countryNumber;
+	public short getActive() {
+		return this.active;
 	}
 
-	public void setCountryNumber(String countryNumber) {
-		this.countryNumber = countryNumber;
-	}
-
-	public int getBranch() {
-		return branch;
-	}
-
-	public void setBranch(int branch) {
-		this.branch = branch;
-	}
-
-	public StockCategory getStockCategory() {
-		return stockCategory;
-	}
-
-	public void setStockCategory(StockCategory stockCategory) {
-		this.stockCategory = stockCategory;
-	}
-
-	public boolean isActive() {
-		return active;
-	}
-
-	public void setActive(boolean active) {
+	public void setActive(short active) {
 		this.active = active;
 	}
 
 	public String getRule() {
-		return rule;
+		return this.rule;
 	}
 
 	public void setRule(String rule) {
 		this.rule = rule;
-	}
-
-	@Override
-	public String toString() {
-		return "[ " + countryNumber + " " + branch + " " + stockCategory + " "
-				+ active + " " + rule + " ]";
 	}
 
 }

@@ -33,7 +33,8 @@ public class JAXBRuleConvertor {
 	 *            the type that the rule is present in the form
 	 * @return the rule with all the properties of the jaxb rule
 	 */
-	public static MappingRule getMappingRule(WrapperRuleJAXB wrapperRuleJAXB, String xmlOrJson) {
+	public static MappingRule getMappingRule(WrapperRuleJAXB wrapperRuleJAXB,
+			String xmlOrJson) {
 		MappingRuleJAXB mappingRuleJAXB = null;
 		if (xmlOrJson.equals("xml")) {
 			mappingRuleJAXB = XmlJsonObjectConvertor.getMappingRuleFromXML(wrapperRuleJAXB.getJsonORxml());
@@ -61,7 +62,8 @@ public class JAXBRuleConvertor {
 	 *            the type that the rule is present in the form
 	 * @return the rule with all the properties of the jaxb rule
 	 */
-	public static MarketRule getMarketRule(WrapperRuleJAXB wrapperRuleJAXB, String xmlOrJson) {
+	public static MarketRule getMarketRule(WrapperRuleJAXB wrapperRuleJAXB,
+			String xmlOrJson) {
 		MarketRuleJAXB marketRuleJAXB = null;
 		if (xmlOrJson.equals("xml")) {
 			marketRuleJAXB = XmlJsonObjectConvertor.getMarketRuleFromXML(wrapperRuleJAXB.getJsonORxml());
@@ -89,7 +91,8 @@ public class JAXBRuleConvertor {
 	 *            the type that the rule is present in the form
 	 * @return the rule with all the properties of the jaxb rule
 	 */
-	public static InterpretationRule getInterpretationRule(WrapperRuleJAXB wrapperRuleJAXB, String xmlOrJson) {
+	public static InterpretationRule getInterpretationRule(
+			WrapperRuleJAXB wrapperRuleJAXB, String xmlOrJson) {
 		InterpretationRuleJAXB interpretationRuleJAXB = null;
 		if (xmlOrJson.equals("xml")) {
 			interpretationRuleJAXB = XmlJsonObjectConvertor.getInterpretationRuleFromXML(wrapperRuleJAXB.getJsonORxml());
@@ -104,5 +107,22 @@ public class JAXBRuleConvertor {
 			e.printStackTrace();
 		}
 		return interpretationRule;
+	}
+
+	/**
+	 * Method used to copy properties from MarketRule to MarketRuleJAXB
+	 * 
+	 * @param marketRule
+	 *            rule that the properties will be copied to the jaxb rule
+	 * @return the jaxb rule with the same properties as the rule
+	 */
+	public static MarketRuleJAXB copyPropertiesFrom(MarketRule marketRule) {
+		MarketRuleJAXB marketRuleJAXB = new MarketRuleJAXB();
+		try {
+			BeanUtils.copyProperties(marketRuleJAXB, marketRule);
+		} catch (IllegalAccessException | InvocationTargetException e) {
+			e.printStackTrace();
+		}
+		return marketRuleJAXB;
 	}
 }

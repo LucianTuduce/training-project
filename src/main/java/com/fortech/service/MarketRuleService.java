@@ -6,10 +6,9 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.persistence.*;
-import com.fortech.convertor.MarketRuleFlattener;
+
+import com.fortech.helpers.JAXBRuleConvertor;
 import com.fortech.model.MarketRule;
 import com.fortech.model.MarketRulePK;
 import com.fortech.modeljaxb.MarketRuleJAXB;
@@ -76,27 +75,13 @@ public class MarketRuleService {
 	public List<MarketRuleJAXB> getAllMarketRule(){
 		@SuppressWarnings("unchecked")
 		TypedQuery<MarketRule> marketQuery = (TypedQuery<MarketRule>) entityManager.createNamedQuery(MarketRule.MARKETRULE_FIND_ALL);
-		List<MarketRule> marketRules = new ArrayList<MarketRule>(
-				marketQuery.getResultList());
-
+		List<MarketRule> marketRules = new ArrayList<MarketRule>(marketQuery.getResultList());
 		List<MarketRuleJAXB> marketRulesC = new ArrayList<MarketRuleJAXB>();
-		MarketRulePK markPK = new MarketRulePK();
-
-		MarketRuleFlattener chg = new MarketRuleFlattener();
-
-		for (MarketRule i : marketRules) {
-			markPK = i.getId();
-			MarketRuleJAXB j = new MarketRuleJAXB();
-			j.setCountryNumber(markPK.getCountryNumber());
-			j.setBranch(markPK.getBranch());
-			j.setStockCategory(chg.changeShortToEnum(markPK.getStockCategory()));
-			j.setActive(chg.changeShortToBoolean(i.getActive()));
-			j.setRule(i.getRule());
-
-			marketRulesC.add(j);
-
+		
+		for (MarketRule rule : marketRules) {
+			MarketRuleJAXB marketRuleJAXB = JAXBRuleConvertor.copyPropertiesFrom(rule);
+			marketRulesC.add(marketRuleJAXB);
 		}
-
 		return marketRulesC;
 	}
 	
