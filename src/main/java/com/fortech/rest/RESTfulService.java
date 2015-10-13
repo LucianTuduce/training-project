@@ -25,6 +25,12 @@ import com.fortech.service.MappingRuleService;
 import com.fortech.service.MarketRuleService;
 import com.fortech.wrapper.WrapperRuleJAXB;
 
+/**
+ * Class used to communicate with the network. Works with the HTTP protocol.
+ * 
+ * @author lucian.tuduce
+ *
+ */
 
 @Path("/rule")
 @Stateless
@@ -35,7 +41,7 @@ public class RESTfulService {
 
 	@EJB
 	private MappingRuleService mappingRuleService;
-	
+
 	@EJB
 	private InterpretationRuleService interpretationRuleService;
 
@@ -49,11 +55,11 @@ public class RESTfulService {
 	 *            The type of the rule
 	 * @return a list of WrapperRule with all the rules got from db
 	 */
+	// @formatter:off
 	@GET
 	@Path("/{xmlORjson}")
 	@Produces({ "application/xml", "application/json" })
-	public List<WrapperRuleJAXB> getRules(
-			@PathParam("xmlORjson") String xmlORjson) {
+	public List<WrapperRuleJAXB> getRules(@PathParam("xmlORjson") String xmlORjson) {
 
 		List<WrapperRuleJAXB> rules = new ArrayList<WrapperRuleJAXB>();
 		List<MarketRuleJAXB> marketRuleJaxB = new ArrayList<MarketRuleJAXB>();
@@ -72,7 +78,21 @@ public class RESTfulService {
 		return rules;
 	}
 
+	// @formatter:on
 
+	/**
+	 * REST service method used to communicate with the application business
+	 * login in order to delete a rule from the database
+	 * 
+	 * @param ruleType
+	 *            the type of the rule that will be deleted
+	 * @param xmlOrJson
+	 *            the form of the rule type
+	 * @param wrapperRuleJAXB
+	 *            wrapper that will contain the rule in the form mentioned above
+	 * @return a response to the server if the DELETE form the database was successfully or not
+	 */
+	// @formatter:off
 	@DELETE
 	@Path("/{xmlOrJson}/{ruleType}")
 	@Consumes({"application/xml","application/json"})
@@ -111,8 +131,19 @@ public class RESTfulService {
 		}
 		return Response.status(500).entity("FAILED to delete rule").build();
 	}
-	
-	
+	// @formatter:on
+
+	/**
+	 * REST service method used to communicate with the application business
+	 * login in order to add a rule in the database
+	 * 
+	 * @param xmlOrJson
+	 *            the form of the rule type
+	 * @param wrapperRuleJAXB
+	 *            wrapper that will contain the rule in the form mentioned above
+	 * @return a response to the server if the ADD in the database was successfully or not
+	 */
+	// @formatter:off
 	@PUT
 	@Path("/{xmlOrJson}")
 	@Consumes({"aplication/xml", "application/xml"})
@@ -143,4 +174,5 @@ public class RESTfulService {
 		}
 		return Response.status(500).entity("FAILED to add rule").build();
 	}	
+	// @formatter:on
 }

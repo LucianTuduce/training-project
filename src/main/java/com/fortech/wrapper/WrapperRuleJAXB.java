@@ -7,6 +7,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import com.fortech.enums.RuleType;
 
+/**
+ * Class used to obtain all the rules by transforming them from object to string
+ * XML or JSON form of the object
+ * 
+ * @author lucian.tuduce
+ *
+ */
 @XmlRootElement(name = "WrapperTypeJAXB")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class WrapperRuleJAXB {
