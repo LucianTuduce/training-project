@@ -2,6 +2,13 @@ package com.fortech.wrapper;
 
 import com.fortech.enums.RuleType;
 
+/**
+ * Class used to obtain all the rules by transforming them from object to string
+ * XML or JSON form of the object
+ * 
+ * @author lucian.tuduce
+ *
+ */
 public class WrapperRule {
 
 	private RuleType ruleType;
