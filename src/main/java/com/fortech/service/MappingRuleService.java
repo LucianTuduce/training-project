@@ -105,4 +105,11 @@ public class MappingRuleService {
 		return entityManager.find(MappingRule.class, idMappingRule);
 	}
 	
+	public EntityManager getEntityManager() {
+		return entityManager;
+	}
+
+	public void setEntityManager(EntityManager entityManager) {
+		this.entityManager = entityManager;
+	}
 }
