@@ -1,7 +1,11 @@
 package com.fortech.model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
+import org.codehaus.jackson.annotate.JsonManagedReference;
+
 import java.util.List;
 
 /**
@@ -21,11 +25,13 @@ public class InterpretationRule implements Serializable {
 	private int id;
 
 	// bi-directional many-to-one association to TargetVehicle
-	@OneToMany(mappedBy = "interpretationRule")
+	@OneToMany(mappedBy = "interpretationRule", cascade = CascadeType.ALL)
+	@JsonManagedReference
 	private List<TargetVehicle> targetVehicles;
 
 	// bi-directional many-to-one association to InterpretationInnerRule
-	@OneToMany(mappedBy = "interpretationRule")
+	@OneToMany(mappedBy = "interpretationRule", cascade = CascadeType.ALL)
+	@JsonManagedReference
 	private List<InterpretationInnerRule> interpretationInnerRules;
 
 	public InterpretationRule() {

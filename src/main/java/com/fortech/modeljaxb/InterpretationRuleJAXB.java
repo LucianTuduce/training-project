@@ -6,7 +6,6 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-
 import com.fortech.model.InterpretationInnerRule;
 import com.fortech.model.TargetVehicle;
 
@@ -24,10 +23,10 @@ public class InterpretationRuleJAXB {
 	@XmlElement(required = true)
 	private int id;
 
-	@XmlElement(required = true)
+	@XmlElement(name = "target-Vehicles",required = true)
 	private List<TargetVehicle> targetVehicles;
 
-	@XmlElement(required = true)
+	@XmlElement(name = "interpretation-Inner-Rules", required = true)
 	private List<InterpretationInnerRule> interpretationInnerRules;
 
 	public int getId() {

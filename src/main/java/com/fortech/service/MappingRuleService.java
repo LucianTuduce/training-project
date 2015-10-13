@@ -67,13 +67,13 @@ public class MappingRuleService {
 	 * Method used to get all the MappingRules that are present in the
 	 * database
 	 * 
-	 * @return list with all the rules in the database
+	 * @return list with all the mapping rules in the database
 	 */
 	public List<MappingRuleJAXB> getAllMappingRule() {
 		@SuppressWarnings("unchecked")
-		TypedQuery<MappingRule> typedQuery = (TypedQuery<MappingRule>) entityManager.createNamedQuery(MappingRule.FIND_ALL_MAPPING_RULE);
+		TypedQuery<MappingRule> mappingQuery = (TypedQuery<MappingRule>) entityManager.createNamedQuery(MappingRule.FIND_ALL_MAPPING_RULE);
 
-		List<MappingRule> mappingRule = new ArrayList<MappingRule>(typedQuery.getResultList());
+		List<MappingRule> mappingRule = new ArrayList<MappingRule>(mappingQuery.getResultList());
 		
 		List<MappingRuleJAXB> mappingRulesJaxB = new ArrayList<MappingRuleJAXB>();
 		
@@ -86,7 +86,6 @@ public class MappingRuleService {
 			j.setVehicleAttribute(i.getVehicleAttribute());
 			
 			mappingRulesJaxB.add(j);
-
 		}
 
 		return mappingRulesJaxB;

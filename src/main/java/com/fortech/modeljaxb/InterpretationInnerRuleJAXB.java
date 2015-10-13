@@ -4,6 +4,11 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+
+import org.eclipse.persistence.oxm.annotations.XmlInverseReference;
+
+import com.fortech.model.InterpretationRule;
 
 /**
  * The JAXB equivalent of the InterpretationInnerRule. This class is used in
@@ -27,6 +32,9 @@ public class InterpretationInnerRuleJAXB {
 
 	@XmlElement(required = true)
 	private String vehicleAttributeValues;
+	
+	@XmlElement(required = true)
+	private InterpretationRule interpretationRule;
 
 	public int getId() {
 		return id;
@@ -58,6 +66,14 @@ public class InterpretationInnerRuleJAXB {
 
 	public void setVehicleAttributeValues(String vehicleAttributeValues) {
 		this.vehicleAttributeValues = vehicleAttributeValues;
+	}
+	
+	public InterpretationRule getInterpretationRule() {
+		return interpretationRule;
+	}
+
+	public void setInterpretationRule(InterpretationRule interpretationRule) {
+		this.interpretationRule = interpretationRule;
 	}
 
 }
