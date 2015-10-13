@@ -26,6 +26,7 @@ public class InterpretationRule implements Serializable {
 
 	// bi-directional many-to-one association to TargetVehicle
 	@OneToMany(mappedBy = "interpretationRule", cascade = CascadeType.ALL)
+	@JsonManagedReference
 	private List<TargetVehicle> targetVehicles;
 
 	// bi-directional many-to-one association to InterpretationInnerRule
