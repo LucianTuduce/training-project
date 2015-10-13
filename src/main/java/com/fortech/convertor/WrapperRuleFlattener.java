@@ -8,8 +8,8 @@ import com.fortech.wrapper.WrapperRuleJAXB;
 
 /**
  * 
- * The class transform a MarketJAXB/MappingJAXB/InterpretationRuleJAXB into an object of
- * WrapperRule
+ * The class transform a MarketJAXB/MappingJAXB/InterpretationRuleJAXB into an
+ * object of WrapperRule
  * 
  * @author lucian.tuduce
  *
@@ -17,8 +17,13 @@ import com.fortech.wrapper.WrapperRuleJAXB;
 public class WrapperRuleFlattener {
 
 	/**
-	 * The method creates an object WrapperRule(with the String jsonORxml in the
-	 * format xml that it's asked) from a marketRuleJAXB
+	 * Method used to obtained the WrapperRuleJAXB object with the string
+	 * variable having the value of the converted method parameter to XML form
+	 * 
+	 * @param marketRuleJAXB
+	 *            the rule that will be converted to an XML form
+	 * @return wrapperrule object with the correct values in his instance
+	 *         variables
 	 */
 	public static WrapperRuleJAXB createXMLWrapperRuleFor(MarketRuleJAXB marketRuleJAXB) {
 
@@ -29,11 +34,15 @@ public class WrapperRuleFlattener {
 		marketWrapperRule.setJsonORxml(jsonORxml);
 		return marketWrapperRule;
 	}
-	
 
 	/**
-	 * The method creates an object WrapperRule(with the String jsonORxml in the
-	 * format json that it's asked) from a marketRuleJAXB
+	 * Method used to obtained the WrapperRuleJAXB object with the string
+	 * variable having the value of the converted method parameter to JSON form
+	 * 
+	 * @param marketRuleJAXB
+	 *            the rule that will be converted to an JSON form
+	 * @return wrapperrule object with the correct values in his instance
+	 *         variables
 	 */
 	public static WrapperRuleJAXB createJSONWrapperRuleFor(MarketRuleJAXB marketRuleJAXB) {
 
@@ -44,11 +53,15 @@ public class WrapperRuleFlattener {
 		marketWrapperRule.setJsonORxml(jsonORxml);
 		return marketWrapperRule;
 	}
-	
-	
+
 	/**
-	 * The method creates an object WrapperRule(with the String jsonORxml in the
-	 * format xml that it's asked) from a mappingRuleJAXB
+	 * Method used to obtained the WrapperRuleJAXB object with the string
+	 * variable having the value of the converted method parameter to XML form
+	 * 
+	 * @param mappingRuleJAXB
+	 *            the rule that will be converted to an XML form
+	 * @return wrapperrule object with the correct values in his instance
+	 *         variables
 	 */
 	public static WrapperRuleJAXB createXMLWrapperRuleFor(MappingRuleJAXB mappingRuleJAXB) {
 
@@ -61,8 +74,13 @@ public class WrapperRuleFlattener {
 	}
 
 	/**
-	 * The method creates an object WrapperRule(with the String jsonORxml in the
-	 * format json that it's asked) from a mappingRuleJAXB
+	 * Method used to obtained the WrapperRuleJAXB object with the string
+	 * variable having the value of the converted method parameter to JSON form
+	 * 
+	 * @param mappingRuleJAXB
+	 *            the rule that will be converted to an JSON form
+	 * @return wrapperrule object with the correct values in his instance
+	 *         variables
 	 */
 	public static WrapperRuleJAXB createJSONWrapperRuleFor(MappingRuleJAXB mappingRuleJAXB) {
 
@@ -73,11 +91,15 @@ public class WrapperRuleFlattener {
 		mappingWrapperRule.setJsonORxml(jsonORxml);
 		return mappingWrapperRule;
 	}
-	
-	
+
 	/**
-	 * The method creates an object WrapperRule(with the String jsonORxml in the
-	 * format xml that it's asked) from a interpretationRuleJAXB
+	 * Method used to obtained the WrapperRuleJAXB object with the string
+	 * variable having the value of the converted method parameter to XML form
+	 * 
+	 * @param interpretationRuleJAXB
+	 *            the rule that will be converted to an XML form
+	 * @return wrapperrule object with the correct values in his instance
+	 *         variables
 	 */
 	public static WrapperRuleJAXB createXMLWrapperRuleFor(InterpretationRuleJAXB interpretationRuleJAXB) {
 
@@ -88,18 +110,22 @@ public class WrapperRuleFlattener {
 		interpretationWrapperRule.setJsonORxml(jsonORxml);
 		return interpretationWrapperRule;
 	}
-	
 
 	/**
-	 * The method creates an object WrapperRule(with the String jsonORxml in the
-	 * format json that it's asked) from a interpretationRuleJAXB
+	 * Method used to obtained the WrapperRuleJAXB object with the string
+	 * variable having the value of the converted method parameter to JSON form
+	 * 
+	 * @param interpretationRuleJAXB
+	 *            the rule that will be converted to an JSON form
+	 * @return wrapperrule object with the correct values in his instance
+	 *         variables
 	 */
 	public static WrapperRuleJAXB createJSONWrapperRuleFor(InterpretationRuleJAXB interpretationRuleJAXB) {
 
 		WrapperRuleJAXB interpretationWrapperRule = new WrapperRuleJAXB();
 		String jsonORxml = new String();
 		jsonORxml = XmlJsonStringConvertor.getJSONStringForRuleJAXB(interpretationRuleJAXB);
-		interpretationWrapperRule.setRuleType(RuleType.MARKET);
+		interpretationWrapperRule.setRuleType(RuleType.INTERPRETATION);
 		interpretationWrapperRule.setJsonORxml(jsonORxml);
 		return interpretationWrapperRule;
 	}

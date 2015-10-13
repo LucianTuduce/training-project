@@ -19,13 +19,18 @@ import com.fortech.convertor.XmlJsonObjectConvertor;
 import com.fortech.enums.RuleType;
 import com.fortech.helpers.JAXBRuleConvertor;
 import com.fortech.model.MarketRulePK;
-import com.fortech.modeljaxb.InterpretationRuleJAXB;
-import com.fortech.modeljaxb.MappingRuleJAXB;
 import com.fortech.modeljaxb.MarketRuleJAXB;
 import com.fortech.service.InterpretationRuleService;
 import com.fortech.service.MappingRuleService;
 import com.fortech.service.MarketRuleService;
 import com.fortech.wrapper.WrapperRuleJAXB;
+
+/**
+ * Class used to communicate with the network. Works with the HTTP protocol.
+ * 
+ * @author lucian.tuduce
+ *
+ */
 
 @Path("/rule")
 @Stateless
@@ -45,21 +50,19 @@ public class RESTfulService {
 	 * format xmlORjson asked
 	 * 
 	 * @param xmlORjson
-	 *            The format in which the rules will be returned
+	 *            The format in with the rules will be returned
 	 * @param ruleType
 	 *            The type of the rule
 	 * @return a list of WrapperRule with all the rules got from db
 	 */
+	// @formatter:off
 	@GET
 	@Path("/{xmlORjson}")
 	@Produces({ "application/xml", "application/json" })
-	public List<WrapperRuleJAXB> getRules(
-			@PathParam("xmlORjson") String xmlORjson) {
+	public List<WrapperRuleJAXB> getRules(@PathParam("xmlORjson") String xmlORjson) {
 
 		List<WrapperRuleJAXB> rules = new ArrayList<WrapperRuleJAXB>();
 		List<MarketRuleJAXB> marketRuleJaxB = new ArrayList<MarketRuleJAXB>();
-		List<MappingRuleJAXB> mappignRuleJAXB = new ArrayList<MappingRuleJAXB>();
-		List<InterpretationRuleJAXB> interpretationRuleJAXB = new ArrayList<InterpretationRuleJAXB>();
 
 		marketRuleJaxB = marketRuleService.getAllMarketRule();
 		if (xmlORjson.equals("xml")) {
@@ -72,144 +75,104 @@ public class RESTfulService {
 				rules.add(WrapperRuleFlattener.createJSONWrapperRuleFor(market));
 			}
 		}
-
-		mappignRuleJAXB = mappingRuleService.getAllMappingRule();
-		if (xmlORjson.equals("xml")) {
-			for (MappingRuleJAXB mapping : mappignRuleJAXB) {
-				rules.add(WrapperRuleFlattener.createXMLWrapperRuleFor(mapping));
-			}
-
-		} else if (xmlORjson.equals("json")) {
-			for (MappingRuleJAXB mapping : mappignRuleJAXB) {
-				rules.add(WrapperRuleFlattener
-						.createJSONWrapperRuleFor(mapping));
-			}
-		}
-		
-		interpretationRuleJAXB = interpretationRuleService.getAllInterpretationRule();
-		if (xmlORjson.equals("xml")) {
-			for (InterpretationRuleJAXB interpretation : interpretationRuleJAXB) {
-				rules.add(WrapperRuleFlattener.createXMLWrapperRuleFor(interpretation));
-			}
-
-		} else if (xmlORjson.equals("json")) {
-			for (InterpretationRuleJAXB interpretation : interpretationRuleJAXB) {
-				rules.add(WrapperRuleFlattener
-						.createJSONWrapperRuleFor(interpretation));
-			}
-		}
-
 		return rules;
 	}
 
+	// @formatter:on
+
+	/**
+	 * REST service method used to communicate with the application business
+	 * login in order to delete a rule from the database
+	 * 
+	 * @param ruleType
+	 *            the type of the rule that will be deleted
+	 * @param xmlOrJson
+	 *            the form of the rule type
+	 * @param wrapperRuleJAXB
+	 *            wrapper that will contain the rule in the form mentioned above
+	 * @return a response to the server if the DELETE form the database was successfully or not
+	 */
+	// @formatter:off
 	@DELETE
 	@Path("/{xmlOrJson}/{ruleType}")
-	@Consumes({ "application/xml", "application/json" })
-	public Response deleteRuleFromDatabase(
-			@PathParam("ruleType") String ruleType,
-			@PathParam("xmlOrJson") String xmlOrJson,
-			WrapperRuleJAXB wrapperRuleJAXB) {
-
-		if (xmlOrJson.equals("xml")) {
-			if (ruleType.equals("mapping")) {
-				int id = XmlJsonObjectConvertor.getMappingRuleFromXML(
-						wrapperRuleJAXB.getJsonORxml()).getId();
+	@Consumes({"application/xml","application/json"})
+	public Response deleteRuleFromDatabase(@PathParam("ruleType") String ruleType, @PathParam("xmlOrJson") String xmlOrJson, WrapperRuleJAXB wrapperRuleJAXB){
+		
+		if(xmlOrJson.equals("xml")){
+			if(ruleType.equals("mapping")){
+				int id = XmlJsonObjectConvertor.getMappingRuleFromXML(wrapperRuleJAXB.getJsonORxml()).getId();
 				mappingRuleService.deleteFromDatabase(id);
-				return Response.status(200)
-						.entity("Deleted mapping rule with id: " + id).build();
-			} else if (ruleType.equals("market")) {
-				MarketRulePK idRule = XmlJsonObjectConvertor
-						.getMarketRuleFromXML(wrapperRuleJAXB.getJsonORxml())
-						.getId();
+				return Response.status(200).entity("Deleted mapping rule with id: "+ id).build();
+			}else if(ruleType.equals("market")){
+				MarketRulePK idRule = XmlJsonObjectConvertor.getMarketRuleFromXML(wrapperRuleJAXB.getJsonORxml()).getId();
 				marketRuleService.deleteFromDatabase(idRule);
-				return Response.status(200)
-						.entity("Deleted market rule with id: " + idRule)
-						.build();
-			} else if (ruleType.equals("interpretation")) {
-				int id = XmlJsonObjectConvertor.getInterpretationRuleFromXML(
-						wrapperRuleJAXB.getJsonORxml()).getId();
+				return Response.status(200).entity("Deleted market rule with id: "+ idRule).build();
+			}else if(ruleType.equals("interpretation")){
+				int id = XmlJsonObjectConvertor.getInterpretationRuleFromXML(wrapperRuleJAXB.getJsonORxml()).getId();
 				interpretationRuleService.deleteFromDatabase(id);
-				return Response.status(200)
-						.entity("Deleted interpretation rule with id: " + id)
-						.build();
+				return Response.status(200).entity("Deleted interpretation rule with id: "+ id).build();
 			}
-
-		} else if (xmlOrJson.equals("json")) {
-
-			if (ruleType.equals("mapping")) {
-				int id = XmlJsonObjectConvertor.getMappingRuleFromJSON(
-						wrapperRuleJAXB.getJsonORxml()).getId();
+			
+		}else if (xmlOrJson.equals("json")){
+			
+			if(ruleType.equals("mapping")){
+				int id = XmlJsonObjectConvertor.getMappingRuleFromJSON(wrapperRuleJAXB.getJsonORxml()).getId();
 				mappingRuleService.deleteFromDatabase(id);
-				return Response.status(200)
-						.entity("Deleted mapping rule with id: " + id).build();
-			} else if (ruleType.equals("market")) {
-				MarketRulePK idRule = XmlJsonObjectConvertor
-						.getMarketRuleFromJSON(wrapperRuleJAXB.getJsonORxml())
-						.getId();
+				return Response.status(200).entity("Deleted mapping rule with id: "+ id).build();
+			}else if(ruleType.equals("market")){
+				MarketRulePK idRule = XmlJsonObjectConvertor.getMarketRuleFromJSON(wrapperRuleJAXB.getJsonORxml()).getId();
 				marketRuleService.deleteFromDatabase(idRule);
-				return Response.status(200)
-						.entity("Deleted market rule with id: " + idRule)
-						.build();
-			} else if (ruleType.equals("interpretation")) {
-				int id = XmlJsonObjectConvertor.getInterpretationRuleFromJSON(
-						wrapperRuleJAXB.getJsonORxml()).getId();
+				return Response.status(200).entity("Deleted market rule with id: "+ idRule).build();
+			}else if(ruleType.equals("interpretation")){
+				int id = XmlJsonObjectConvertor.getInterpretationRuleFromJSON(wrapperRuleJAXB.getJsonORxml()).getId();
 				interpretationRuleService.deleteFromDatabase(id);
-				return Response.status(200)
-						.entity("Deleted interpretation rule with id: " + id)
-						.build();
+				return Response.status(200).entity("Deleted interpretation rule with id: "+ id).build();
 			}
 		}
 		return Response.status(500).entity("FAILED to delete rule").build();
 	}
+	// @formatter:on
 
+	/**
+	 * REST service method used to communicate with the application business
+	 * login in order to add a rule in the database
+	 * 
+	 * @param xmlOrJson
+	 *            the form of the rule type
+	 * @param wrapperRuleJAXB
+	 *            wrapper that will contain the rule in the form mentioned above
+	 * @return a response to the server if the ADD in the database was successfully or not
+	 */
+	// @formatter:off
 	@PUT
 	@Path("/{xmlOrJson}")
-	@Consumes({ "aplication/xml", "application/xml" })
-	public Response addRuleInDatabase(@PathParam("xmlOrJson") String xmlOrJson,
-			WrapperRuleJAXB wrapperRuleJAXB) {
-
-		if (xmlOrJson.equals("xml")) {
-			if (wrapperRuleJAXB.getRuleType().equals(RuleType.MAPPING)) {
-				mappingRuleService.insertInDatabase(JAXBRuleConvertor
-						.getMappingRule(wrapperRuleJAXB, xmlOrJson));
-				return Response.status(200)
-						.entity("Added mapping rule converted from XML")
-						.build();
-			} else if (wrapperRuleJAXB.getRuleType().equals(RuleType.MARKET)) {
-				marketRuleService.insertInDatabase(JAXBRuleConvertor
-						.getMarketRule(wrapperRuleJAXB, xmlOrJson));
-				return Response.status(200)
-						.entity("Added market rule converted from XML").build();
-			} else if (wrapperRuleJAXB.getRuleType().equals(
-					RuleType.INTERPRETATION))
-				;
-			interpretationRuleService.insertInDatabase(JAXBRuleConvertor
-					.getInterpretationRule(wrapperRuleJAXB, xmlOrJson));
-			return Response.status(200)
-					.entity("Added interpreation rule converted from XML")
-					.build();
-		} else if (xmlOrJson.equals("json")) {
-			if (wrapperRuleJAXB.getRuleType().equals(RuleType.MAPPING)) {
-				mappingRuleService.insertInDatabase(JAXBRuleConvertor
-						.getMappingRule(wrapperRuleJAXB, xmlOrJson));
-				return Response.status(200)
-						.entity("Added mapping rule converted from JSON")
-						.build();
-			} else if (wrapperRuleJAXB.getRuleType().equals(RuleType.MARKET)) {
-				marketRuleService.insertInDatabase(JAXBRuleConvertor
-						.getMarketRule(wrapperRuleJAXB, xmlOrJson));
-				return Response.status(200)
-						.entity("Added market rule converted from JSON")
-						.build();
-			} else if (wrapperRuleJAXB.getRuleType().equals(
-					RuleType.INTERPRETATION)) {
-				interpretationRuleService.insertInDatabase(JAXBRuleConvertor
-						.getInterpretationRule(wrapperRuleJAXB, xmlOrJson));
-				return Response.status(200)
-						.entity("Added interpreation rule converted from JSON")
-						.build();
+	@Consumes({"aplication/xml", "application/xml"})
+	public Response addRuleInDatabase(@PathParam("xmlOrJson") String xmlOrJson, WrapperRuleJAXB wrapperRuleJAXB){
+		
+		if(xmlOrJson.equals("xml")){
+			if(wrapperRuleJAXB.getRuleType().equals(RuleType.MAPPING)){
+				mappingRuleService.insertInDatabase(JAXBRuleConvertor.getMappingRule(wrapperRuleJAXB, xmlOrJson));
+				return Response.status(200).entity("Added mapping rule converted from XML").build();
+			}else if(wrapperRuleJAXB.getRuleType().equals(RuleType.MARKET)){
+				marketRuleService.insertInDatabase(JAXBRuleConvertor.getMarketRule(wrapperRuleJAXB, xmlOrJson));
+				return Response.status(200).entity("Added market rule converted from XML").build();
+			}else if(wrapperRuleJAXB.getRuleType().equals(RuleType.INTERPRETATION));
+				interpretationRuleService.insertInDatabase(JAXBRuleConvertor.getInterpretationRule(wrapperRuleJAXB, xmlOrJson));
+				return Response.status(200).entity("Added interpreation rule converted from XML").build();
+			} 
+		else if(xmlOrJson.equals("json")){
+			if(wrapperRuleJAXB.getRuleType().equals(RuleType.MAPPING)){
+				mappingRuleService.insertInDatabase(JAXBRuleConvertor.getMappingRule(wrapperRuleJAXB, xmlOrJson));
+				return Response.status(200).entity("Added mapping rule converted from JSON").build();
+			}else if(wrapperRuleJAXB.getRuleType().equals(RuleType.MARKET)){
+				marketRuleService.insertInDatabase(JAXBRuleConvertor.getMarketRule(wrapperRuleJAXB, xmlOrJson));
+				return Response.status(200).entity("Added market rule converted from JSON").build();
+			}else if(wrapperRuleJAXB.getRuleType().equals(RuleType.INTERPRETATION)){
+				interpretationRuleService.insertInDatabase(JAXBRuleConvertor.getInterpretationRule(wrapperRuleJAXB, xmlOrJson));
+				return Response.status(200).entity("Added interpreation rule converted from JSON").build();
 			}
 		}
 		return Response.status(500).entity("FAILED to add rule").build();
-	}
+	}	
+	// @formatter:on
 }
