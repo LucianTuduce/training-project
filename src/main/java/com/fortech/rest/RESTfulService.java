@@ -20,13 +20,14 @@ import com.fortech.enums.RuleType;
 import com.fortech.helpers.JAXBRuleConvertor;
 import com.fortech.model.MarketRulePK;
 import com.fortech.modeljaxb.MarketRuleJAXB;
-import com.fortech.modeljaxb.WrapperRuleJAXB;
 import com.fortech.service.InterpretationRuleService;
 import com.fortech.service.MappingRuleService;
 import com.fortech.service.MarketRuleService;
+import com.fortech.wrapper.WrapperRuleJAXB;
 
-@Stateless
+
 @Path("/rule")
+@Stateless
 public class RESTfulService {
 
 	@EJB
@@ -120,19 +121,24 @@ public class RESTfulService {
 		if(xmlOrJson.equals("xml")){
 			if(wrapperRuleJAXB.getRuleType().equals(RuleType.MAPPING)){
 				mappingRuleService.insertInDatabase(JAXBRuleConvertor.getMappingRule(wrapperRuleJAXB, xmlOrJson));
+				return Response.status(200).entity("Added mapping rule converted from XML").build();
 			}else if(wrapperRuleJAXB.getRuleType().equals(RuleType.MARKET)){
 				marketRuleService.insertInDatabase(JAXBRuleConvertor.getMarketRule(wrapperRuleJAXB, xmlOrJson));
+				return Response.status(200).entity("Added market rule converted from XML").build();
 			}else if(wrapperRuleJAXB.getRuleType().equals(RuleType.INTERPRETATION));
 				interpretationRuleService.insertInDatabase(JAXBRuleConvertor.getInterpretationRule(wrapperRuleJAXB, xmlOrJson));
+				return Response.status(200).entity("Added interpreation rule converted from XML").build();
 			} 
 		else if(xmlOrJson.equals("json")){
 			if(wrapperRuleJAXB.getRuleType().equals(RuleType.MAPPING)){
 				mappingRuleService.insertInDatabase(JAXBRuleConvertor.getMappingRule(wrapperRuleJAXB, xmlOrJson));
-				JAXBRuleConvertor.getMappingRule(wrapperRuleJAXB, xmlOrJson);
+				return Response.status(200).entity("Added mapping rule converted from JSON").build();
 			}else if(wrapperRuleJAXB.getRuleType().equals(RuleType.MARKET)){
 				marketRuleService.insertInDatabase(JAXBRuleConvertor.getMarketRule(wrapperRuleJAXB, xmlOrJson));
+				return Response.status(200).entity("Added market rule converted from JSON").build();
 			}else if(wrapperRuleJAXB.getRuleType().equals(RuleType.INTERPRETATION)){
 				interpretationRuleService.insertInDatabase(JAXBRuleConvertor.getInterpretationRule(wrapperRuleJAXB, xmlOrJson));
+				return Response.status(200).entity("Added interpreation rule converted from JSON").build();
 			}
 		}
 		return Response.status(500).entity("FAILED to add rule").build();

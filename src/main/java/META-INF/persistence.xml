@@ -2,7 +2,8 @@
 <persistence version="2.0"
 	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
-	<persistence-unit name="UVSRulesApi">
+	<persistence-unit name="UVSRulesApi" transaction-type="JTA">
+	<jta-data-source>jdbc/DB2Connection</jta-data-source>
 		<class>com.fortech.model.InterpretationInnerRule</class>
 		<class>com.fortech.model.InterpretationRule</class>
 		<class>com.fortech.model.MappingRule</class>
@@ -18,7 +19,8 @@
 			<property name="javax.persistence.jdbc.user" value="lucian.tuduce" />
 			<property name="javax.persistence.jdbc.password" value="" />
 			<property name="javax.persistence.jdbc.driver" value="com.ibm.db2.jcc.DB2Driver" />
+			<property name="javax.persistence.jdbc.password" value=""/>
+			<property name="javax.persistence.jdbc.driver" value="COM.ibm.db2.jcc.DB2Driver" />
 		</properties>
-
 	</persistence-unit>
 </persistence>

@@ -11,7 +11,7 @@ import com.fortech.model.MarketRule;
 import com.fortech.modeljaxb.InterpretationRuleJAXB;
 import com.fortech.modeljaxb.MappingRuleJAXB;
 import com.fortech.modeljaxb.MarketRuleJAXB;
-import com.fortech.modeljaxb.WrapperRuleJAXB;
+import com.fortech.wrapper.WrapperRuleJAXB;
 
 public class JAXBRuleConvertor {
 	
