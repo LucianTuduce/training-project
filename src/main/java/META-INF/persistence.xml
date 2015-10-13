@@ -18,6 +18,7 @@
 			<property name="javax.persistence.jdbc.user" value="db2admin" />
 			<property name="javax.persistence.jdbc.password" value="db2admin" />
 			<property name="javax.persistence.jdbc.driver" value="com.ibm.db2.jcc.DB2Driver" />
+
 		</properties>
 	</persistence-unit>
 </persistence>
