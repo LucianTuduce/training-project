@@ -4,34 +4,32 @@ import static org.junit.Assert.*;
 
 import javax.persistence.EntityManager;
 
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import com.fortech.model.MappingRule;
 import com.fortech.service.MappingRuleService;
 
+@RunWith(MockitoJUnitRunner.class)
 public class MappingRuleServiceTest {
 
-
+	@InjectMocks
 	private MappingRuleService mappingRuleService;
+	@Mock
 	private EntityManager entityManager;
 
-	@Before
-	public void init(){
-		mappingRuleService = new MappingRuleService();
-		entityManager = Mockito.mock(EntityManager.class);
-		mappingRuleService.setEntityManager(entityManager);
-	}
-	
 	@Test
 	public void insertInDatabase_addObjectInDatabase_AddedSuccesfully() {
 
 		MappingRule mappingRuleCreatedForAdd = createTestMappingRuleForInsertInDatabase();
 		assertNotNull(mappingRuleService);
-		assertNotNull(mappingRuleService.getEntityManager());
+		assertNotNull(entityManager);
 		mappingRuleService.insertInDatabase(mappingRuleCreatedForAdd);
-		Mockito.verify(mappingRuleService.getEntityManager(), Mockito.times(1)).persist(mappingRuleCreatedForAdd);
+		Mockito.verify(entityManager, Mockito.times(1)).persist(mappingRuleCreatedForAdd);
 
 	}
 	
@@ -41,9 +39,9 @@ public class MappingRuleServiceTest {
 
 		MappingRule mappingRuleCreatedForUpdate = createTestMappingRuleForUpdateInDatabase();
 		assertNotNull(mappingRuleService);
-		assertNotNull(mappingRuleService.getEntityManager());
+		assertNotNull(entityManager);
 		mappingRuleService.updateInDatabase(mappingRuleCreatedForUpdate);
-		Mockito.verify(mappingRuleService.getEntityManager(),Mockito.times(1)).merge(mappingRuleCreatedForUpdate);	
+		Mockito.verify(entityManager,Mockito.times(1)).merge(mappingRuleCreatedForUpdate);	
 	}
 	
 
@@ -52,9 +50,9 @@ public class MappingRuleServiceTest {
 
 		MappingRule mappingRuleCreatedForDelete = createTestMappingRuleForInsertInDatabase();
 		assertNotNull(mappingRuleService);
-		assertNotNull(mappingRuleService.getEntityManager());
+		assertNotNull(entityManager);
 		mappingRuleService.deleteFromDatabase(mappingRuleCreatedForDelete.getId());
-		Mockito.verify(mappingRuleService.getEntityManager(),Mockito.times(1)).find(MappingRule.class, mappingRuleCreatedForDelete.getId());
+		Mockito.verify(entityManager,Mockito.times(1)).find(MappingRule.class, mappingRuleCreatedForDelete.getId());
 
 	}
 
@@ -63,15 +61,11 @@ public class MappingRuleServiceTest {
 
 		MappingRule mappingRuleCreatedForFinding = createTestMappingRuleForInsertInDatabase();
 		assertNotNull(mappingRuleService);
-		assertNotNull(mappingRuleService.getEntityManager());
+		assertNotNull(entityManager);
 		Mockito.when(entityManager.find(MappingRule.class, 12)).thenReturn(mappingRuleCreatedForFinding);
 		
-		MappingRuleService mockedMappingRuleService = Mockito.mock(MappingRuleService.class);
-		Mockito.when(mockedMappingRuleService.findById(12)).thenCallRealMethod();
-		Mockito.when(mockedMappingRuleService.getEntityManager()).thenReturn(entityManager);
-		
 		assertSame(mappingRuleCreatedForFinding, mappingRuleService.findById(12));
-		assertNull(mockedMappingRuleService.findById(21));
+		assertNull(mappingRuleService.findById(21));
 
 	}
 
