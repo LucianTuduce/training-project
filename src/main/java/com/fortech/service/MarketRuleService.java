@@ -39,10 +39,7 @@ public class MarketRuleService {
 	 */
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public void insertInDatabase(MarketRule marketRule) {
-		entityManager.getTransaction().begin();
 		entityManager.persist(marketRule);
-		entityManager.getTransaction().commit();
-		
 	}
 
 	/**
@@ -54,9 +51,7 @@ public class MarketRuleService {
 	 */
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public void updateInDatabase(MarketRule marketRule) {
-		entityManager.getTransaction().begin();
 		entityManager.merge(marketRule);
-		entityManager.getTransaction().commit();
 	}
 
 	/**
@@ -68,9 +63,7 @@ public class MarketRuleService {
 	 */
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public void deleteFromDatabase(MarketRulePK marketRulePK) {
-		entityManager.getTransaction().begin();
 		entityManager.remove(entityManager.find(MarketRule.class, marketRulePK));
-		entityManager.getTransaction().commit();
 	}
 
 

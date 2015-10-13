@@ -1,5 +1,6 @@
 package com.fortech.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -10,6 +11,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import com.fortech.model.InterpretationRule;
+import com.fortech.modeljaxb.InterpretationRuleJAXB;
 
 /**
  * Service class for the InterpretationRule.
@@ -37,9 +39,7 @@ public class InterpretationRuleService {
 	 */
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public void insertInDatabase(InterpretationRule interpretationRule) {
-		entityManager.getTransaction().begin();
 		entityManager.persist(interpretationRule);
-		entityManager.getTransaction().commit();
 	}
 
 	/**
@@ -51,9 +51,7 @@ public class InterpretationRuleService {
 	 */
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public void updateInDatabase(InterpretationRule interpretationRule) {
-		entityManager.getTransaction().begin();
 		entityManager.merge(interpretationRule);
-		entityManager.getTransaction().commit();
 	}
 
 	/**
@@ -64,9 +62,7 @@ public class InterpretationRuleService {
 	 */
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public void deleteFromDatabase(int idInterpretationRule) {
-		entityManager.getTransaction().begin();
 		entityManager.remove(entityManager.find(InterpretationRule.class, idInterpretationRule));
-		entityManager.getTransaction().commit();
 	}
 
 	/**
@@ -91,5 +87,32 @@ public class InterpretationRuleService {
 	 */
 	public InterpretationRule findById(int idInterpretationRule) {
 		return entityManager.find(InterpretationRule.class, idInterpretationRule);
+	}
+
+	/**
+	 * Method used to get all the MappingRules that are present in the
+	 * database
+	 * 
+	 * @return list with all the interpretation rules in the database
+	 */
+	public List<InterpretationRuleJAXB> getAllInterpretationRule() {
+		@SuppressWarnings("unchecked")
+		TypedQuery<InterpretationRule> interpretationQuery = (TypedQuery<InterpretationRule>) entityManager.createNamedQuery(InterpretationRule.FIND_ALL_INTERPRETATION_RULE);
+		List<InterpretationRule> interpretationRule = new ArrayList<InterpretationRule>(interpretationQuery.getResultList());
+		
+		System.out.println(interpretationRule);
+		List<InterpretationRuleJAXB> interpretationRuleJaxB = new ArrayList<InterpretationRuleJAXB>();
+		
+		
+		for(InterpretationRule i : interpretationRule){
+			InterpretationRuleJAXB j = new InterpretationRuleJAXB();
+			j.setId(i.getId());
+			j.setTargetVehicles(i.getTargetVehicles());
+			j.setInterpretationInnerRules(i.getInterpretationInnerRules());
+						
+			interpretationRuleJaxB.add(j);
+		}
+		
+		return interpretationRuleJaxB;
 	}
 }

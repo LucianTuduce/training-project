@@ -37,9 +37,7 @@ public class MappingRuleService {
 	 */
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public void insertInDatabase(MappingRule mappingRule) {
-		entityManager.getTransaction().begin();
 		entityManager.persist(mappingRule);
-		entityManager.getTransaction().commit();
 	}
 
 	/**
@@ -51,9 +49,7 @@ public class MappingRuleService {
 	 */
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public void updateInDatabase(MappingRule mappingRule) {
-		entityManager.getTransaction().begin();
 		entityManager.merge(mappingRule);
-		entityManager.getTransaction().commit();
 	}
 
 	/**
@@ -64,9 +60,7 @@ public class MappingRuleService {
 	 */
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public void deleteFromDatabase(int idMappingRule) {
-		entityManager.getTransaction().begin();
 		entityManager.remove(entityManager.find(MappingRule.class, idMappingRule));
-		entityManager.getTransaction().commit();
 	}
 
 	/**
