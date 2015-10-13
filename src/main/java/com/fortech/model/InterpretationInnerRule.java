@@ -3,6 +3,9 @@ package com.fortech.model;
 import java.io.Serializable;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlTransient;
+
+import org.codehaus.jackson.annotate.JsonBackReference;
 
 /**
  * The persistent class for the "InterpretationInnerRule" database table.
@@ -30,6 +33,7 @@ public class InterpretationInnerRule implements Serializable {
 	// bi-directional many-to-one association to InterpretationRule
 	@ManyToOne
 	@JoinColumn(name = "\"id\"", insertable=false, updatable=false)
+	@JsonBackReference
 	private InterpretationRule interpretationRule;
 
 	public InterpretationInnerRule() {
@@ -67,6 +71,7 @@ public class InterpretationInnerRule implements Serializable {
 		this.vehicleAttributeValues = vehicleAttributeValues;
 	}
 
+	@XmlTransient
 	public InterpretationRule getInterpretationRule() {
 		return interpretationRule;
 	}

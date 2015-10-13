@@ -8,12 +8,12 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
-
+import javax.persistence.*;
 import com.fortech.convertor.MarketRuleFlattener;
 import com.fortech.model.MarketRule;
 import com.fortech.model.MarketRulePK;
 import com.fortech.modeljaxb.MarketRuleJAXB;
+
 
 /**
  * Service class for the MarketRule.

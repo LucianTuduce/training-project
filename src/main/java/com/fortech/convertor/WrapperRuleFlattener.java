@@ -84,7 +84,7 @@ public class WrapperRuleFlattener {
 
 		WrapperRuleJAXB interpretationWrapperRule = new WrapperRuleJAXB();
 		String jsonORxml = new String();
-		jsonORxml = XmlJsonStringConvertor.getJSONStringForRuleJAXB(interpretationRuleJAXB);
+		jsonORxml = XmlJsonStringConvertor.getXMLStringForRuleJAXB(interpretationRuleJAXB);
 		interpretationWrapperRule.setRuleType(RuleType.INTERPRETATION);
 		interpretationWrapperRule.setJsonORxml(jsonORxml);
 		return interpretationWrapperRule;
@@ -100,7 +100,7 @@ public class WrapperRuleFlattener {
 		WrapperRuleJAXB interpretationWrapperRule = new WrapperRuleJAXB();
 		String jsonORxml = new String();
 		jsonORxml = XmlJsonStringConvertor.getJSONStringForRuleJAXB(interpretationRuleJAXB);
-		interpretationWrapperRule.setRuleType(RuleType.MARKET);
+		interpretationWrapperRule.setRuleType(RuleType.INTERPRETATION);
 		interpretationWrapperRule.setJsonORxml(jsonORxml);
 		return interpretationWrapperRule;
 	}

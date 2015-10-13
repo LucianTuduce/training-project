@@ -1,7 +1,11 @@
 package com.fortech.model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlTransient;
+
+import org.codehaus.jackson.annotate.JsonBackReference;
 
 
 /**
@@ -28,8 +32,9 @@ public class TargetVehicle implements Serializable {
 	private String vehicleAttributeValue;
 
 	//bi-directional many-to-one association to InterpretationRule
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="\"id\"", insertable=false, updatable=false)
+	@JsonBackReference
 	private InterpretationRule interpretationRule;
 
 	public TargetVehicle() {
@@ -66,7 +71,7 @@ public class TargetVehicle implements Serializable {
 	public void setVehicleAttributeValue(String vehicleAttributeValue) {
 		this.vehicleAttributeValue = vehicleAttributeValue;
 	}
-
+	@XmlTransient
 	public InterpretationRule getInterpretationRule() {
 		return this.interpretationRule;
 	}
