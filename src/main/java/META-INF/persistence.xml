@@ -14,12 +14,10 @@
 			<property name="eclipselink.ddl-generation.output-mode"
 				value="database" />
 			<property name="eclipselink.jdbc.batch-writing" value="JDBC" />
-			<property name="javax.persistence.jdbc.url"
-				value="jdbc:db2://localhost:50000/SAMPLE:retrieveMessagesFromServerOnGetMessage=true;" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:db2://192.168.204.208:50000/SAMPLE:retrieveMessagesFromServerOnGetMessage=true;" />
 			<property name="javax.persistence.jdbc.user" value="db2admin" />
 			<property name="javax.persistence.jdbc.password" value="db2admin" />
 			<property name="javax.persistence.jdbc.driver" value="com.ibm.db2.jcc.DB2Driver" />
-			
 		</properties>
 	</persistence-unit>
 </persistence>
