@@ -37,9 +37,7 @@ public class InterpretationRuleService {
 	 */
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public void insertInDatabase(InterpretationRule interpretationRule) {
-		entityManager.getTransaction().begin();
 		entityManager.persist(interpretationRule);
-		entityManager.getTransaction().commit();
 	}
 
 	/**
@@ -51,9 +49,7 @@ public class InterpretationRuleService {
 	 */
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public void updateInDatabase(InterpretationRule interpretationRule) {
-		entityManager.getTransaction().begin();
 		entityManager.merge(interpretationRule);
-		entityManager.getTransaction().commit();
 	}
 
 	/**
@@ -64,9 +60,7 @@ public class InterpretationRuleService {
 	 */
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public void deleteFromDatabase(int idInterpretationRule) {
-		entityManager.getTransaction().begin();
 		entityManager.remove(entityManager.find(InterpretationRule.class, idInterpretationRule));
-		entityManager.getTransaction().commit();
 	}
 
 	/**
