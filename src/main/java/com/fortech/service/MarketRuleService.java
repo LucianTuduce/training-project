@@ -38,6 +38,7 @@ public class MarketRuleService {
 	 */
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public void insertInDatabase(MarketRule marketRule) {
+		System.out.println("Aici am schimbat");
 		entityManager.persist(marketRule);
 	}
 
