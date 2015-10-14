@@ -48,7 +48,6 @@ public class RestService {
 	@Path("/{xmlOrJson}/market")
 	@Produces("application/json")
 	public WrapperRuleJAXB getRule(@PathParam("xmlOrJson") String xmlOrJson){
-		System.out.println("Here");
 		if(xmlOrJson.equals("xml")){
 			MarketRuleJAXB marketRuleJAXB = new MarketRuleJAXB();
 			MarketRulePK pk = new MarketRulePK();
