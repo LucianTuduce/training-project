@@ -14,9 +14,11 @@ import javax.xml.bind.Marshaller;
 
 
 
+
 import org.apache.http.HttpResponse;
 import org.apache.http.ProtocolVersion;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
@@ -38,11 +40,13 @@ public class RESTfulServiceTest {
 	private static final String URL_GET_ONE_RULE_XML = "http://localhost:9080/UVSRulesApi/car/test/json/market";
 	private static final String URL_GET_MORE_RULES_XML = "http://localhost:9080/UVSRulesApi/car/rule/xml";
 	private static final String URL_PUT_RULE_XML = "http://localhost:9080/UVSRulesApi/car/rule/xml";
+	private static final String URL_DELETE_RULE_XML = "http://localhost:9080/UVSRulesApi/car/rule/market/xml";
 	
 	private HttpClient client;
 	private HttpGet requestOne;
 	private HttpGet requestMoreRules;
 	private HttpPut putRequest;
+	private HttpDelete deleteRequest;
 	
 	@Before
 	public void init(){
@@ -50,6 +54,7 @@ public class RESTfulServiceTest {
 		requestOne = new HttpGet(URL_GET_ONE_RULE_XML);
 		requestMoreRules = new HttpGet(URL_GET_MORE_RULES_XML);
 		putRequest = new HttpPut(URL_PUT_RULE_XML);
+		deleteRequest = new HttpDelete(URL_DELETE_RULE_XML);
 	}
 	
 	@Test
@@ -115,9 +120,6 @@ public class RESTfulServiceTest {
 	}
 
 	
-	/**
-	 * Need work to be done on it!!!
-	 */
 	@Test
 	public void addRuleInDatabase_AddRuleInDatabase_SuccessStatus200() {
 		WrapperRuleJAXB wrapperRuleJAXB = new WrapperRuleJAXB();
@@ -138,6 +140,28 @@ public class RESTfulServiceTest {
 
 	}
 	
+	
+	@Test
+	public void deleteRuleFromDatabase_DeletedRuleFromDatabase_SuccessStatus200() {
+		WrapperRuleJAXB wrapperRuleJAXB = new WrapperRuleJAXB();
+		wrapperRuleJAXB.setRuleType(RuleType.MARKET);
+		wrapperRuleJAXB.setJsonORxml(XmlJsonStringConvertor.getXMLStringForRuleJAXB(getMarketRule()));
+		HttpResponse response = null;
+
+		deleteRequest.addHeader("Content-Type", "application/xml");
+		deleteRequest.addHeader("Accept", "application/xml");
+		try {		
+			response = client.execute(deleteRequest);
+		} catch (IOException e2) {
+			e2.printStackTrace();
+		}
+		assertNotNull(response);
+		assertEquals(400, response.getStatusLine().getStatusCode());
+		assertEquals(new ProtocolVersion("HTTP", 1, 1), response.getStatusLine().getProtocolVersion());
+
+	}
+	
+	
 	private MarketRuleJAXB getMarketRule(){
 		MarketRuleJAXB marketRuleJAXB = new MarketRuleJAXB();
 		marketRuleJAXB.setActive((short) 1);
@@ -148,8 +172,8 @@ public class RESTfulServiceTest {
 
 	private MarketRulePK getMarketRulePKforTest() {
 		MarketRulePK marketRulePK = new MarketRulePK();
-		marketRulePK.setBranch(333);
-		marketRulePK.setCountryNumber("AAAAA");
+		marketRulePK.setBranch(44);
+		marketRulePK.setCountryNumber("CCCCCAA");
 		marketRulePK.setStockCategory((short)0);
 		return marketRulePK;
 	}
