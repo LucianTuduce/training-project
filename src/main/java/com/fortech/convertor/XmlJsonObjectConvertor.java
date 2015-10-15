@@ -2,17 +2,15 @@ package com.fortech.convertor;
 
 import java.io.IOException;
 import java.io.StringReader;
-
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
-
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
-
 import com.fortech.modeljaxb.InterpretationRuleJAXB;
 import com.fortech.modeljaxb.MappingRuleJAXB;
+import com.fortech.modeljaxb.MarketRuleFlattedJAXB;
 import com.fortech.modeljaxb.MarketRuleJAXB;
 
 /**
@@ -34,7 +32,8 @@ public class XmlJsonObjectConvertor {
 	public static MappingRuleJAXB getMappingRuleFromXML(String mappingRule) {
 		try {
 			StringReader objetReader = new StringReader(mappingRule);
-			JAXBContext jaxbContext = JAXBContext.newInstance(MappingRuleJAXB.class);
+			JAXBContext jaxbContext = JAXBContext
+					.newInstance(MappingRuleJAXB.class);
 			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 			return (MappingRuleJAXB) unmarshaller.unmarshal(objetReader);
 		} catch (JAXBException e) {
@@ -54,13 +53,40 @@ public class XmlJsonObjectConvertor {
 	public static MarketRuleJAXB getMarketRuleFromXML(String marketRule) {
 		try {
 			StringReader objetReader = new StringReader(marketRule);
-			JAXBContext jaxbContext = JAXBContext.newInstance(MarketRuleJAXB.class);
+			JAXBContext jaxbContext = JAXBContext
+					.newInstance(MarketRuleJAXB.class);
 			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 			return (MarketRuleJAXB) unmarshaller.unmarshal(objetReader);
 		} catch (JAXBException e) {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	/**
+	 * Method used to convert from the string XML form of the
+	 * MarketRuleFlattedJAXB to the object form of the MarketRuleFlattedJAXB
+	 * 
+	 * @param mappingRule
+	 *            the string for of the rule
+	 * @return the converted object from the string
+	 */
+	public static MarketRuleFlattedJAXB getMarketRuleFFromXML(String marketRule) {
+
+		StringReader reader = new StringReader(marketRule);
+
+		JAXBContext jaxbContext;
+		MarketRuleFlattedJAXB marketRuleF = new MarketRuleFlattedJAXB();
+
+		try {
+			jaxbContext = JAXBContext.newInstance(MarketRuleFlattedJAXB.class);
+			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+			marketRuleF = (MarketRuleFlattedJAXB) jaxbUnmarshaller.unmarshal(reader);
+		} catch (JAXBException e) {
+			e.printStackTrace();
+		}
+		
+		return marketRuleF;
 	}
 
 	/**
@@ -75,7 +101,8 @@ public class XmlJsonObjectConvertor {
 			String interpretationRule) {
 		try {
 			StringReader objetReader = new StringReader(interpretationRule);
-			JAXBContext jaxbContext = JAXBContext.newInstance(InterpretationRuleJAXB.class);
+			JAXBContext jaxbContext = JAXBContext
+					.newInstance(InterpretationRuleJAXB.class);
 			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 			return (InterpretationRuleJAXB) unmarshaller.unmarshal(objetReader);
 		} catch (JAXBException e) {
@@ -137,7 +164,8 @@ public class XmlJsonObjectConvertor {
 			String interpretationRule) {
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			return mapper.readValue(interpretationRule, InterpretationRuleJAXB.class);
+			return mapper.readValue(interpretationRule,
+					InterpretationRuleJAXB.class);
 		} catch (JsonParseException | JsonMappingException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

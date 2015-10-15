@@ -2,16 +2,16 @@ package com.fortech.service;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-
+import com.fortech.convertor.XmlJsonObjectConvertor;
 import com.fortech.model.InterpretationRule;
 import com.fortech.modeljaxb.InterpretationRuleJAXB;
+import com.fortech.wrapper.WrapperRuleJAXB;
 
 /**
  * Service class for the InterpretationRule.
@@ -99,11 +99,9 @@ public class InterpretationRuleService {
 		@SuppressWarnings("unchecked")
 		TypedQuery<InterpretationRule> interpretationQuery = (TypedQuery<InterpretationRule>) entityManager.createNamedQuery(InterpretationRule.FIND_ALL_INTERPRETATION_RULE);
 		List<InterpretationRule> interpretationRule = new ArrayList<InterpretationRule>(interpretationQuery.getResultList());
-		
-		System.out.println(interpretationRule);
+
 		List<InterpretationRuleJAXB> interpretationRuleJaxB = new ArrayList<InterpretationRuleJAXB>();
-		
-		
+				
 		for(InterpretationRule i : interpretationRule){
 			InterpretationRuleJAXB j = new InterpretationRuleJAXB();
 			j.setId(i.getId());
@@ -114,5 +112,26 @@ public class InterpretationRuleService {
 		}
 		
 		return interpretationRuleJaxB;
+	}
+
+	/**
+	 * Method used in order to get a InterpretationRule from the database based
+	 * on an id
+	 * 
+	 * @param idInterpretationRule
+	 *            id of the rule that will be obtained from the database
+	 * @return the rule that will have the id as the parameter of the method
+	 */
+	public InterpretationRuleJAXB getById(WrapperRuleJAXB wrapperRuleJAXB) {
+		InterpretationRuleJAXB interpretationRuleJAXB = new InterpretationRuleJAXB();
+		
+		int id = XmlJsonObjectConvertor.getInterpretationRuleFromXML(wrapperRuleJAXB.getJsonORxml()).getId();
+		InterpretationRule interpretationRule = entityManager.find(InterpretationRule.class, id);
+		
+		interpretationRuleJAXB.setId(interpretationRule.getId());
+		interpretationRuleJAXB.setInterpretationInnerRules(interpretationRule.getInterpretationInnerRules());
+		interpretationRuleJAXB.setTargetVehicles(interpretationRule.getTargetVehicles());
+		
+		return interpretationRuleJAXB;
 	}
 }

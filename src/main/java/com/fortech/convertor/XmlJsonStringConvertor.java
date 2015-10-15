@@ -2,17 +2,15 @@ package com.fortech.convertor;
 
 import java.io.IOException;
 import java.io.StringWriter;
-
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
-
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
-
 import com.fortech.modeljaxb.InterpretationRuleJAXB;
 import com.fortech.modeljaxb.MappingRuleJAXB;
+import com.fortech.modeljaxb.MarketRuleFlattedJAXB;
 import com.fortech.modeljaxb.MarketRuleJAXB;
 
 /**
@@ -88,6 +86,30 @@ public class XmlJsonStringConvertor {
 	}
 
 	/**
+	 * Method used to convert from the MarketRuleFlattedJAXB object to the XML
+	 * string form of the object
+	 * 
+	 * @param marketRuleFlattedJAXB
+	 *            the marketRuleFlattedJAXB object that will be converted
+	 * @return the XML string form of the marketRuleFlattedJAXB object
+	 * 
+	 */
+	public static String getXMLStringForRuleJAXB(
+			MarketRuleFlattedJAXB marketRuleFlattedJAXB) {
+		StringWriter stringWriter = new StringWriter();
+		try {
+			JAXBContext jaxbContext = JAXBContext.newInstance(MarketRuleFlattedJAXB.class);
+			Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+			jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+			jaxbMarshaller.marshal(marketRuleFlattedJAXB, stringWriter);
+		} catch (JAXBException e) {
+			e.printStackTrace();
+		}
+		return stringWriter.toString();
+	}
+	
+	
+	/**
 	 * Method used to convert from the MappingRuleJAXB object to the JSON string
 	 * form of the object
 	 * 
@@ -130,6 +152,28 @@ public class XmlJsonStringConvertor {
 		return objectStringForm.toString();
 	}
 
+	/**
+	 * Method used to convert from the InterpretationRuleJAXB object to the JSON
+	 * string form of the object
+	 * 
+	 * @param interpretationRuleJAXB
+	 *            the interpretationRuleJAXB object that will be converted
+	 * @return the JSON string form of the interpretationRuleJAXB object
+	 */
+	public static String getJSONStringForRuleJAXB(
+			MarketRuleFlattedJAXB marketRuleFlattedJAXB) {
+		ObjectMapper mapper = new ObjectMapper();
+		StringWriter objectStringForm = new StringWriter();
+		try {
+			mapper.writeValue(objectStringForm, marketRuleFlattedJAXB);
+		} catch (JsonGenerationException | JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return objectStringForm.toString();
+	}
+	
 	/**
 	 * Method used to convert from the InterpretationRuleJAXB object to the JSON
 	 * string form of the object

@@ -9,9 +9,10 @@ import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-
+import com.fortech.convertor.XmlJsonObjectConvertor;
 import com.fortech.model.MappingRule;
 import com.fortech.modeljaxb.MappingRuleJAXB;
+import com.fortech.wrapper.WrapperRuleJAXB;
 
 /**
  * Service class for the MappingRule.
@@ -102,6 +103,28 @@ public class MappingRuleService {
 	 */
 	public MappingRule findById(int idMappingRule) {
 		return entityManager.find(MappingRule.class, idMappingRule);
+	}
+
+	/**
+	 * Method used in order to get a MappingRule from the database based
+	 * on an id
+	 * 
+	 * @param idMappingRule
+	 *            id of the rule that will be obtained from the database
+	 * @return the rule that will have the id as the parameter of the method
+	 */
+	public MappingRuleJAXB getById(WrapperRuleJAXB wrapperRuleJAXB) {
+		
+		MappingRuleJAXB mappingRuleJAXB = new MappingRuleJAXB();
+		int id = XmlJsonObjectConvertor.getMappingRuleFromXML(wrapperRuleJAXB.getJsonORxml()).getId();
+		MappingRule mappingRule = entityManager.find(MappingRule.class, id);
+		
+		mappingRuleJAXB.setId(mappingRule.getId());
+		mappingRuleJAXB.setSourceValue(mappingRule.getSourceValue());
+		mappingRuleJAXB.setTargetValue(mappingRule.getTargetValue());
+		mappingRuleJAXB.setVehicleAttribute(mappingRule.getVehicleAttribute());
+		
+		return mappingRuleJAXB;
 	}
 	
 }

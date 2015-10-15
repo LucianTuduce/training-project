@@ -8,17 +8,21 @@ import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
-
 import com.fortech.convertor.WrapperRuleFlattener;
 import com.fortech.convertor.XmlJsonObjectConvertor;
+import com.fortech.convertor.XmlJsonStringConvertor;
 import com.fortech.enums.RuleType;
 import com.fortech.helpers.JAXBRuleConvertor;
 import com.fortech.model.MarketRulePK;
+import com.fortech.modeljaxb.InterpretationRuleJAXB;
+import com.fortech.modeljaxb.MappingRuleJAXB;
+import com.fortech.modeljaxb.MarketRuleFlattedJAXB;
 import com.fortech.modeljaxb.MarketRuleJAXB;
 import com.fortech.service.InterpretationRuleService;
 import com.fortech.service.MappingRuleService;
@@ -63,6 +67,8 @@ public class RESTfulService {
 
 		List<WrapperRuleJAXB> rules = new ArrayList<WrapperRuleJAXB>();
 		List<MarketRuleJAXB> marketRuleJaxB = new ArrayList<MarketRuleJAXB>();
+		List<MappingRuleJAXB> mappignRuleJAXB = new ArrayList<MappingRuleJAXB>();
+		List<InterpretationRuleJAXB> interpretationRuleJAXB = new ArrayList<InterpretationRuleJAXB>();
 
 		marketRuleJaxB = marketRuleService.getAllMarketRule();
 		if (xmlORjson.equals("xml")) {
@@ -75,7 +81,71 @@ public class RESTfulService {
 				rules.add(WrapperRuleFlattener.createJSONWrapperRuleFor(market));
 			}
 		}
+
+		mappignRuleJAXB = mappingRuleService.getAllMappingRule();
+		if (xmlORjson.equals("xml")) {
+			for (MappingRuleJAXB mapping : mappignRuleJAXB) {
+				rules.add(WrapperRuleFlattener.createXMLWrapperRuleFor(mapping));
+			}
+
+		} else if (xmlORjson.equals("json")) {
+			for (MappingRuleJAXB mapping : mappignRuleJAXB) {
+				rules.add(WrapperRuleFlattener
+						.createJSONWrapperRuleFor(mapping));
+			}
+		}
+		
+		interpretationRuleJAXB = interpretationRuleService.getAllInterpretationRule();
+		if (xmlORjson.equals("xml")) {
+			for (InterpretationRuleJAXB interpretation : interpretationRuleJAXB) {
+				rules.add(WrapperRuleFlattener.createXMLWrapperRuleFor(interpretation));
+			}
+
+		} else if (xmlORjson.equals("json")) {
+			for (InterpretationRuleJAXB interpretation : interpretationRuleJAXB) {
+				rules.add(WrapperRuleFlattener
+						.createJSONWrapperRuleFor(interpretation));
+			}
+		}
+
 		return rules;
+	}
+
+	@POST
+	@Path("/{xmlOrJson}/{ruleType}")
+	@Produces({ "application/xml", "application/json" })
+	public String getRulesByID(@PathParam("xmlOrJson") String xmlOrJson,
+			@PathParam("ruleType") String ruleType, WrapperRuleJAXB wrapperRuleJAXB) {
+
+		if (ruleType.equals("market")) {
+			MarketRuleFlattedJAXB marketRuleFJAXB = marketRuleService.getById(wrapperRuleJAXB);
+			if (xmlOrJson.equals("xml")) {
+				return XmlJsonStringConvertor.getXMLStringForRuleJAXB(marketRuleFJAXB);
+			} else {
+				return XmlJsonStringConvertor.getJSONStringForRuleJAXB(marketRuleFJAXB);
+			}
+		}
+
+		if (ruleType.equals("mapping")) {
+			MappingRuleJAXB mappingRuleJAXB = new MappingRuleJAXB();
+			mappingRuleJAXB = mappingRuleService.getById(wrapperRuleJAXB);
+			if (xmlOrJson.equals("xml")) {
+				return XmlJsonStringConvertor.getXMLStringForRuleJAXB(mappingRuleJAXB);
+			} else {
+				return XmlJsonStringConvertor.getJSONStringForRuleJAXB(mappingRuleJAXB);
+			}
+		}
+
+		if (ruleType.equals("interpretation")) {
+			InterpretationRuleJAXB interpretationRuleJAXB = new InterpretationRuleJAXB();
+			interpretationRuleJAXB = interpretationRuleService.getById(wrapperRuleJAXB);
+			if (xmlOrJson.equals("xml")) {
+				return XmlJsonStringConvertor.getXMLStringForRuleJAXB(interpretationRuleJAXB);
+			} else {
+					return XmlJsonStringConvertor.getJSONStringForRuleJAXB(interpretationRuleJAXB);
+			}
+		}
+		return null;
 	}
 
 	// @formatter:on
