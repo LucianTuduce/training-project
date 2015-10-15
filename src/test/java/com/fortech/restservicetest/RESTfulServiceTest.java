@@ -6,23 +6,21 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.StringWriter;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
+
+
 import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
+import org.apache.http.ProtocolVersion;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPut;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.message.BasicNameValuePair;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -44,14 +42,14 @@ public class RESTfulServiceTest {
 	private HttpClient client;
 	private HttpGet requestOne;
 	private HttpGet requestMoreRules;
-	private HttpPut putOne;
+	private HttpPut putRequest;
 	
 	@Before
 	public void init(){
 		client = HttpClientBuilder.create().build();
 		requestOne = new HttpGet(URL_GET_ONE_RULE_XML);
 		requestMoreRules = new HttpGet(URL_GET_MORE_RULES_XML);
-		putOne = new HttpPut(URL_PUT_RULE_XML);
+		putRequest = new HttpPut(URL_PUT_RULE_XML);
 	}
 	
 	@Test
@@ -125,48 +123,19 @@ public class RESTfulServiceTest {
 		WrapperRuleJAXB wrapperRuleJAXB = new WrapperRuleJAXB();
 		wrapperRuleJAXB.setRuleType(RuleType.MARKET);
 		wrapperRuleJAXB.setJsonORxml(XmlJsonStringConvertor.getXMLStringForRuleJAXB(getMarketRule()));
-		List<NameValuePair> rules = new ArrayList<NameValuePair>();
-		rules.add(new BasicNameValuePair("data", marshalledWrapperRuleJAXB()));
+		HttpResponse response = null;
+		putRequest.addHeader("Content-Type", "application/xml");
+		putRequest.addHeader("Accept", "application/xml");
 		try {
-			putOne.setEntity(new UrlEncodedFormEntity(rules));
-		} catch (UnsupportedEncodingException e2) {
-			// TODO Auto-generated catch block
+			putRequest.setEntity(new StringEntity(marshalledWrapperRuleJAXB()));
+			response = client.execute(putRequest);
+		} catch (IOException e2) {
 			e2.printStackTrace();
 		}
-		
-		HttpResponse response = null;
-		try {
-			response = client.execute(putOne);
-		} catch (ClientProtocolException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		System.out.println("Response Code : " 
-	                + response.getStatusLine().getStatusCode());
+		assertNotNull(response);
+		assertEquals(response.getStatusLine().getStatusCode(), 200);
+		assertEquals(new ProtocolVersion("HTTP", 1, 1), response.getStatusLine().getProtocolVersion());
 
-		BufferedReader rd = null;
-		try {
-			rd = new BufferedReader(
-			        new InputStreamReader(response.getEntity().getContent()));
-		} catch (UnsupportedOperationException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		StringBuffer result = new StringBuffer();
-		String line = "";
-		try {
-			while ((line = rd.readLine()) != null) {
-				result.append(line);
-				System.out.println(line);
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 	
 	private MarketRuleJAXB getMarketRule(){
@@ -179,8 +148,8 @@ public class RESTfulServiceTest {
 
 	private MarketRulePK getMarketRulePKforTest() {
 		MarketRulePK marketRulePK = new MarketRulePK();
-		marketRulePK.setBranch(44);
-		marketRulePK.setCountryNumber("XXXXXXX");
+		marketRulePK.setBranch(333);
+		marketRulePK.setCountryNumber("AAAAA");
 		marketRulePK.setStockCategory((short)0);
 		return marketRulePK;
 	}
@@ -197,7 +166,6 @@ public class RESTfulServiceTest {
 		} catch (JAXBException e) {
 			e.printStackTrace();
 		}
-		
 		return writer.toString();
 	}
 	
