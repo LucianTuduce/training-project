@@ -164,6 +164,7 @@ public class RESTfulServiceTest {
 
 		putRequest.addHeader("Content-Type", "application/xml");
 		putRequest.addHeader("Accept", "application/xml");
+		putRequest.addHeader("Accept", "application/json");
 		try {
 			putRequest.setEntity(new StringEntity(marshalledWrapperRuleJAXB()));
 			response = client.execute(putRequest);
