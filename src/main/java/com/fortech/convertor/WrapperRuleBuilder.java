@@ -20,7 +20,6 @@ public class WrapperRuleBuilder {
 	 * Method used to obtained the WrapperRuleJAXB object with the string
 	 * variable having the value of the converted method parameter to XML form
 	 * 
-<<<<<<< Upstream, based on origin/master
 	 * @param marketRuleJAXB
 	 *            the rule that will be converted to an XML form
 	 * @return wrapperrule object with the correct values in his instance
@@ -40,36 +39,6 @@ public class WrapperRuleBuilder {
 	 * Method used to obtained the WrapperRuleJAXB object with the string
 	 * variable having the value of the converted method parameter to JSON form
 	 * 
-	 * @param marketRuleJAXB
-	 *            the rule that will be converted to an JSON form
-	 * @return wrapperrule object with the correct values in his instance
-	 *         variables
-	 */
-	public static WrapperRuleJAXB createJSONWrapperRuleFor(MarketRuleFlattedJAXB marketRuleFJAXB) {
-
-		WrapperRuleJAXB marketWrapperRule = new WrapperRuleJAXB();
-		String jsonORxml = new String();
-		jsonORxml = XmlJsonStringConvertor.getJSONStringForRuleJAXB(marketRuleFJAXB);
-=======
-	 * @param MarketRuleFlattedJAXB
-	 *            the rule that will be converted to an XML form
-	 * @return wrapperrule object with the correct values in his instance
-	 *         variables
-	 */
-	public static WrapperRuleJAXB createXMLWrapperRuleFor(MarketRuleFlattedJAXB MarketRuleFlattedJAXB) {
-
-		WrapperRuleJAXB marketWrapperRule = new WrapperRuleJAXB();
-		String jsonORxml = new String();
-		jsonORxml = XmlJsonStringConvertor.getXMLStringForRuleJAXB(MarketRuleFlattedJAXB);
-		marketWrapperRule.setRuleType(RuleType.MARKET);
-		marketWrapperRule.setJsonORxml(jsonORxml);
-		return marketWrapperRule;
-	}
-
-	/**
-	 * Method used to obtained the WrapperRuleJAXB object with the string
-	 * variable having the value of the converted method parameter to JSON form
-	 * 
 	 * @param MarketRuleFlattedJAXB
 	 *            the rule that will be converted to an JSON form
 	 * @return wrapperrule object with the correct values in his instance
@@ -80,7 +49,6 @@ public class WrapperRuleBuilder {
 		WrapperRuleJAXB marketWrapperRule = new WrapperRuleJAXB();
 		String jsonORxml = new String();
 		jsonORxml = XmlJsonStringConvertor.getJSONStringForRuleJAXB(MarketRuleFlattedJAXB);
->>>>>>> 211970b Deleted MarketRuleJAXB and changed it to MarketRuleFlattedJAXB
 		marketWrapperRule.setRuleType(RuleType.MARKET);
 		marketWrapperRule.setJsonORxml(jsonORxml);
 		return marketWrapperRule;
