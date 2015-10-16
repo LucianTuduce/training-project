@@ -14,7 +14,6 @@ import com.fortech.model.MarketRulePK;
 import com.fortech.modeljaxb.InterpretationRuleJAXB;
 import com.fortech.modeljaxb.MappingRuleJAXB;
 import com.fortech.modeljaxb.MarketRuleFlattedJAXB;
-import com.fortech.modeljaxb.MarketRuleJAXB;
 import com.fortech.wrapper.WrapperRuleJAXB;
 
 /**
@@ -54,33 +53,6 @@ public class JAXBRuleConvertor {
 		return mappingRule;
 	}
 
-	/**
-	 * Method used to get the MarketRule with all the properties copied from
-	 * the MappingRuleJAXB
-	 * 
-	 * @param wrapperRuleJAXB
-	 *            the wrapper that contains the string XML or JSON form of the
-	 *            rule
-	 * @param xmlOrJson
-	 *            the type that the rule is present in the form
-	 * @return the rule with all the properties of the jaxb rule
-	 */
-	public static MarketRule getMarketRule(WrapperRuleJAXB wrapperRuleJAXB, String xmlOrJson) {
-		MarketRuleJAXB marketRuleJAXB = null;
-		if (xmlOrJson.equals("xml")) {
-			marketRuleJAXB = XmlJsonObjectConvertor.getMarketRuleFromXML(wrapperRuleJAXB.getJsonORxml());
-		} else if (xmlOrJson.equals("json")) {
-			marketRuleJAXB = XmlJsonObjectConvertor.getMarketRuleFromJSON(wrapperRuleJAXB.getJsonORxml());
-		}
-
-		MarketRule marketRule = new MarketRule();
-		try {
-			BeanUtils.copyProperties(marketRule, marketRuleJAXB);
-		} catch (IllegalAccessException | InvocationTargetException e) {
-			e.printStackTrace();
-		}
-		return marketRule;
-	}
 
 	/**
 	 * Method used to get the MappingRule with all the properties copied from
@@ -137,22 +109,23 @@ public class JAXBRuleConvertor {
 		}
 		return marketRuleFlatted;
 	}
-
+	
 	/**
-	 * Method used to copy properties from MarketRule to MarketRuleJAXB
+	 * Method used to copy properties from MarketRuleFlattedJAXB to MarketRuleFlatted
 	 * 
 	 * @param marketRule
 	 *            rule that the properties will be copied to the jaxb rule
 	 * @return the jaxb rule with the same properties as the rule
 	 */
 	public static MarketRuleFlattedJAXB copyPropertiesFrom(MarketRule marketRule) {
-		MarketRuleFlattedJAXB marketRuleFlattedJAXB = new MarketRuleFlattedJAXB();
-		try {
-			BeanUtils.copyProperties(marketRuleFlattedJAXB, marketRule);
-		} catch (IllegalAccessException | InvocationTargetException e) {
-			e.printStackTrace();
-		}
-		return marketRuleFlattedJAXB;
+		MarketRuleFlattener marketRuleFlattener = new MarketRuleFlattener();
+		MarketRuleFlattedJAXB flatted = new MarketRuleFlattedJAXB();
+		flatted.setActive(marketRuleFlattener.changeShortToBoolean(marketRule.getActive()));
+		flatted.setBranch(marketRule.getId().getBranch());
+		flatted.setCountryNumber(marketRule.getId().getCountryNumber());
+		flatted.setRule(marketRule.getRule());
+		flatted.setStockCategory(marketRuleFlattener.changeShortToEnum(marketRule.getId().getStockCategory()));
+		return flatted;
 	}
 
 	/**

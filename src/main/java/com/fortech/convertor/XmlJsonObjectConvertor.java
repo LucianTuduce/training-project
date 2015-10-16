@@ -11,7 +11,6 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.fortech.modeljaxb.InterpretationRuleJAXB;
 import com.fortech.modeljaxb.MappingRuleJAXB;
 import com.fortech.modeljaxb.MarketRuleFlattedJAXB;
-import com.fortech.modeljaxb.MarketRuleJAXB;
 
 /**
  * Class used to convert from XML or JSON format to the corresponding object.
@@ -41,25 +40,6 @@ public class XmlJsonObjectConvertor {
 		return null;
 	}
 
-	/**
-	 * Method used to convert from the string XML form of the MarketRuleJAXB to
-	 * the object form of the MarketRuleJAXB
-	 * 
-	 * @param mappingRule
-	 *            the string for of the rule
-	 * @return the converted object from the string
-	 */
-	public static MarketRuleJAXB getMarketRuleFromXML(String marketRule) {
-		try {
-			StringReader objetReader = new StringReader(marketRule);
-			JAXBContext jaxbContext = JAXBContext.newInstance(MarketRuleJAXB.class);
-			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-			return (MarketRuleJAXB) unmarshaller.unmarshal(objetReader);
-		} catch (JAXBException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
 
 	/**
 	 * Method used to convert from the string XML form of the
@@ -124,26 +104,6 @@ public class XmlJsonObjectConvertor {
 			e.printStackTrace();
 		}
 
-		return null;
-	}
-
-	/**
-	 * Method used to convert from the string JSON form of the MarketRuleJAXB to
-	 * the object form of the MarketRuleJAXB
-	 * 
-	 * @param mappingRule
-	 *            the string for of the rule
-	 * @return the converted object from the string
-	 */
-	public static MarketRuleJAXB getMarketRuleFromJSON(String marketRule) {
-		ObjectMapper mapper = new ObjectMapper();
-		try {
-			return mapper.readValue(marketRule, MarketRuleJAXB.class);
-		} catch (JsonParseException | JsonMappingException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 		return null;
 	}
 

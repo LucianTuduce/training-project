@@ -20,16 +20,16 @@ public class WrapperRuleBuilder {
 	 * Method used to obtained the WrapperRuleJAXB object with the string
 	 * variable having the value of the converted method parameter to XML form
 	 * 
-	 * @param marketRuleJAXB
+	 * @param MarketRuleFlattedJAXB
 	 *            the rule that will be converted to an XML form
 	 * @return wrapperrule object with the correct values in his instance
 	 *         variables
 	 */
-	public static WrapperRuleJAXB createXMLWrapperRuleFor(MarketRuleFlattedJAXB marketRuleFJAXB) {
+	public static WrapperRuleJAXB createXMLWrapperRuleFor(MarketRuleFlattedJAXB MarketRuleFlattedJAXB) {
 
 		WrapperRuleJAXB marketWrapperRule = new WrapperRuleJAXB();
 		String jsonORxml = new String();
-		jsonORxml = XmlJsonStringConvertor.getXMLStringForRuleJAXB(marketRuleFJAXB);
+		jsonORxml = XmlJsonStringConvertor.getXMLStringForRuleJAXB(MarketRuleFlattedJAXB);
 		marketWrapperRule.setRuleType(RuleType.MARKET);
 		marketWrapperRule.setJsonORxml(jsonORxml);
 		return marketWrapperRule;
@@ -39,16 +39,16 @@ public class WrapperRuleBuilder {
 	 * Method used to obtained the WrapperRuleJAXB object with the string
 	 * variable having the value of the converted method parameter to JSON form
 	 * 
-	 * @param marketRuleJAXB
+	 * @param MarketRuleFlattedJAXB
 	 *            the rule that will be converted to an JSON form
 	 * @return wrapperrule object with the correct values in his instance
 	 *         variables
 	 */
-	public static WrapperRuleJAXB createJSONWrapperRuleFor(MarketRuleFlattedJAXB marketRuleFJAXB) {
+	public static WrapperRuleJAXB createJSONWrapperRuleFor(MarketRuleFlattedJAXB MarketRuleFlattedJAXB) {
 
 		WrapperRuleJAXB marketWrapperRule = new WrapperRuleJAXB();
 		String jsonORxml = new String();
-		jsonORxml = XmlJsonStringConvertor.getJSONStringForRuleJAXB(marketRuleFJAXB);
+		jsonORxml = XmlJsonStringConvertor.getJSONStringForRuleJAXB(MarketRuleFlattedJAXB);
 		marketWrapperRule.setRuleType(RuleType.MARKET);
 		marketWrapperRule.setJsonORxml(jsonORxml);
 		return marketWrapperRule;
