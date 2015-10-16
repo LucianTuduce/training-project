@@ -13,6 +13,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
+
 import com.fortech.convertor.WrapperRuleBuilder;
 import com.fortech.convertor.XmlJsonObjectConvertor;
 import com.fortech.convertor.XmlJsonStringConvertor;
@@ -20,7 +21,6 @@ import com.fortech.enums.RuleType;
 import com.fortech.helpers.JAXBRuleConvertor;
 import com.fortech.model.MarketRule;
 import com.fortech.model.MarketRuleFlatted;
-import com.fortech.model.MarketRulePK;
 import com.fortech.modeljaxb.InterpretationRuleJAXB;
 import com.fortech.modeljaxb.MappingRuleJAXB;
 import com.fortech.modeljaxb.MarketRuleFlattedJAXB;
@@ -75,13 +75,11 @@ public class RESTfulService {
 			for (MarketRuleFlattedJAXB market : marketRuleFJaxB) {
 				rules.add(WrapperRuleBuilder.createXMLWrapperRuleFor(market));
 			}
-
 		} else if (xmlORjson.equals("json")) {
 			for (MarketRuleFlattedJAXB market : marketRuleFJaxB) {
-				rules.add(WrapperRuleBuilder.createJSONWrapperRuleFor(market));
-			}
+				rules.add(WrapperRuleBuilder.createJSONWrapperRuleFor(market));		
 		}
-
+		}
 		mappignRuleJAXB = mappingRuleService.getAllMappingRule();
 		if (xmlORjson.equals("xml")) {
 			for (MappingRuleJAXB mapping : mappignRuleJAXB) {
@@ -92,6 +90,7 @@ public class RESTfulService {
 			for (MappingRuleJAXB mapping : mappignRuleJAXB) {
 				rules.add(WrapperRuleBuilder
 						.createJSONWrapperRuleFor(mapping));
+				rules.add(WrapperRuleBuilder.createJSONWrapperRuleFor(mapping));
 			}
 		}
 		
@@ -105,6 +104,7 @@ public class RESTfulService {
 			for (InterpretationRuleJAXB interpretation : interpretationRuleJAXB) {
 				rules.add(WrapperRuleBuilder
 						.createJSONWrapperRuleFor(interpretation));
+				rules.add(WrapperRuleBuilder.createJSONWrapperRuleFor(interpretation));
 			}
 		}
 
@@ -113,7 +113,7 @@ public class RESTfulService {
 
 	@POST
 	@Path("/{xmlOrJson}/{ruleType}")
-	@Produces({ "application/xml", "application/json" })
+	@Produces({"application/xml", "application/json"})
 	public String getRulesByID(@PathParam("xmlOrJson") String xmlOrJson,
 			@PathParam("ruleType") String ruleType, WrapperRuleJAXB wrapperRuleJAXB) {
 
@@ -175,9 +175,11 @@ public class RESTfulService {
 				mappingRuleService.deleteFromDatabase(id);
 				return Response.status(200).entity("Deleted mapping rule with id: "+ id).build();
 			}else if(ruleType.equals("market")){
-				MarketRulePK idRule = XmlJsonObjectConvertor.getMarketRuleFromXML(wrapperRuleJAXB.getJsonORxml()).getId();
-				marketRuleService.deleteFromDatabase(idRule);
-				return Response.status(200).entity("Deleted market rule with id: "+ idRule).build();
+				MarketRuleFlattedJAXB flattedJAXB = XmlJsonObjectConvertor.getMarketRuleFFromXML(wrapperRuleJAXB.getJsonORxml());
+				MarketRuleFlatted flatted = JAXBRuleConvertor.copyPropertiesFrom(flattedJAXB);
+				MarketRule rule = JAXBRuleConvertor.getConvertedRuleFrom(flatted);
+				marketRuleService.deleteFromDatabase(rule.getId());
+				return Response.status(200).entity("Deleted market rule with id: "+ rule.getId()).build();
 			}else if(ruleType.equals("interpretation")){
 				int id = XmlJsonObjectConvertor.getInterpretationRuleFromXML(wrapperRuleJAXB.getJsonORxml()).getId();
 				interpretationRuleService.deleteFromDatabase(id);
@@ -191,9 +193,11 @@ public class RESTfulService {
 				mappingRuleService.deleteFromDatabase(id);
 				return Response.status(200).entity("Deleted mapping rule with id: "+ id).build();
 			}else if(ruleType.equals("market")){
-				MarketRulePK idRule = XmlJsonObjectConvertor.getMarketRuleFromJSON(wrapperRuleJAXB.getJsonORxml()).getId();
-				marketRuleService.deleteFromDatabase(idRule);
-				return Response.status(200).entity("Deleted market rule with id: "+ idRule).build();
+				MarketRuleFlattedJAXB flattedJAXB = XmlJsonObjectConvertor.getMarketRuleFlattedFromJSON(wrapperRuleJAXB.getJsonORxml());
+				MarketRuleFlatted flatted = JAXBRuleConvertor.copyPropertiesFrom(flattedJAXB);
+				MarketRule rule = JAXBRuleConvertor.getConvertedRuleFrom(flatted);
+				marketRuleService.deleteFromDatabase(rule.getId());
+				return Response.status(200).entity("Deleted market rule with id: "+ rule.getId()).build();
 			}else if(ruleType.equals("interpretation")){
 				int id = XmlJsonObjectConvertor.getInterpretationRuleFromJSON(wrapperRuleJAXB.getJsonORxml()).getId();
 				interpretationRuleService.deleteFromDatabase(id);

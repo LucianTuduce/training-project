@@ -12,7 +12,6 @@ import com.fortech.helpers.JAXBRuleConvertor;
 import com.fortech.model.MarketRule;
 import com.fortech.model.MarketRulePK;
 import com.fortech.modeljaxb.MarketRuleFlattedJAXB;
-import com.fortech.modeljaxb.MarketRuleJAXB;
 import com.fortech.wrapper.WrapperRuleJAXB;
 
 /**

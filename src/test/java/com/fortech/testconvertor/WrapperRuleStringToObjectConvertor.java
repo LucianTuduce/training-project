@@ -59,6 +59,11 @@ public class WrapperRuleStringToObjectConvertor {
 		return null;
 	}
 
+	/**
+	 * 
+	 * @param wrapperRules
+	 * @return
+	 */
 	public static List<WrapperRuleJAXB> getConvertedListFromString(String wrapperRules) {
 
 		JAXBContext jaxbContext = null;
@@ -77,7 +82,7 @@ public class WrapperRuleStringToObjectConvertor {
 		return rules.getWrapperRules();
 	}
 
-	public static String getMarshaledListINString(WrapperRules wrapperRules){
+	public static String getMarshaledListInString(WrapperRules wrapperRules){
 		JAXBContext jaxbContext = null;
 		StringWriter stringWriter = new StringWriter();
 		try {
@@ -86,7 +91,6 @@ public class WrapperRuleStringToObjectConvertor {
 			jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 			jaxbMarshaller.marshal(wrapperRules, stringWriter);
 		} catch (JAXBException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}    
 	    return stringWriter.toString();
