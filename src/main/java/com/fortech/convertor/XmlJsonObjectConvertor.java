@@ -32,8 +32,7 @@ public class XmlJsonObjectConvertor {
 	public static MappingRuleJAXB getMappingRuleFromXML(String mappingRule) {
 		try {
 			StringReader objetReader = new StringReader(mappingRule);
-			JAXBContext jaxbContext = JAXBContext
-					.newInstance(MappingRuleJAXB.class);
+			JAXBContext jaxbContext = JAXBContext.newInstance(MappingRuleJAXB.class);
 			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 			return (MappingRuleJAXB) unmarshaller.unmarshal(objetReader);
 		} catch (JAXBException e) {
@@ -53,8 +52,7 @@ public class XmlJsonObjectConvertor {
 	public static MarketRuleJAXB getMarketRuleFromXML(String marketRule) {
 		try {
 			StringReader objetReader = new StringReader(marketRule);
-			JAXBContext jaxbContext = JAXBContext
-					.newInstance(MarketRuleJAXB.class);
+			JAXBContext jaxbContext = JAXBContext.newInstance(MarketRuleJAXB.class);
 			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 			return (MarketRuleJAXB) unmarshaller.unmarshal(objetReader);
 		} catch (JAXBException e) {
@@ -97,12 +95,10 @@ public class XmlJsonObjectConvertor {
 	 *            the string for of the rule
 	 * @return the converted object from the string
 	 */
-	public static InterpretationRuleJAXB getInterpretationRuleFromXML(
-			String interpretationRule) {
+	public static InterpretationRuleJAXB getInterpretationRuleFromXML(String interpretationRule) {
 		try {
 			StringReader objetReader = new StringReader(interpretationRule);
-			JAXBContext jaxbContext = JAXBContext
-					.newInstance(InterpretationRuleJAXB.class);
+			JAXBContext jaxbContext = JAXBContext.newInstance(InterpretationRuleJAXB.class);
 			Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 			return (InterpretationRuleJAXB) unmarshaller.unmarshal(objetReader);
 		} catch (JAXBException e) {
@@ -110,7 +106,6 @@ public class XmlJsonObjectConvertor {
 		}
 		return null;
 	}
-
 	/**
 	 * Method used to convert from the string JSON form of the MappingRuleJAXB
 	 * to the object form of the MappingRuleJAXB
@@ -160,12 +155,30 @@ public class XmlJsonObjectConvertor {
 	 *            the string for of the rule
 	 * @return the converted object from the string
 	 */
-	public static InterpretationRuleJAXB getInterpretationRuleFromJSON(
-			String interpretationRule) {
+	public static InterpretationRuleJAXB getInterpretationRuleFromJSON(String interpretationRule) {
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			return mapper.readValue(interpretationRule,
-					InterpretationRuleJAXB.class);
+			return mapper.readValue(interpretationRule, InterpretationRuleJAXB.class);
+		} catch (JsonParseException | JsonMappingException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	/**
+	 * Method used to convert from the string JSON form of the
+	 * MarketRuleFlattedJAXB to the object form of the MarketRuleFlattedJAXB
+	 * 
+	 * @param marketRuleFlattedJAXB
+	 *            the string for of the rule
+	 * @return the converted object from the string
+	 */
+	public static MarketRuleFlattedJAXB getMarketRuleFlattedFromJSON(String marketRuleFlattedJAXB) {
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			return mapper.readValue(marketRuleFlattedJAXB, MarketRuleFlattedJAXB.class);
 		} catch (JsonParseException | JsonMappingException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

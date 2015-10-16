@@ -23,10 +23,10 @@ public class InterpretationRuleJAXB {
 	@XmlElement(required = true)
 	private int id;
 
-	@XmlElement(name = "target-Vehicles",required = true)
+	@XmlElement(name = "target-Vehicles")
 	private List<TargetVehicle> targetVehicles;
 
-	@XmlElement(name = "interpretation-Inner-Rules", required = true)
+	@XmlElement(name = "interpretation-Inner-Rules")
 	private List<InterpretationInnerRule> interpretationInnerRules;
 
 	public int getId() {

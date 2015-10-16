@@ -2,10 +2,12 @@ package com.fortech.testconvertor;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.io.StringWriter;
 import java.util.List;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
 import org.codehaus.jackson.JsonParseException;
@@ -75,4 +77,19 @@ public class WrapperRuleStringToObjectConvertor {
 		return rules.getWrapperRules();
 	}
 
+	public static String getMarshaledListINString(WrapperRules wrapperRules){
+		JAXBContext jaxbContext = null;
+		StringWriter stringWriter = new StringWriter();
+		try {
+			jaxbContext = JAXBContext.newInstance(WrapperRules.class);
+			 Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+			jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+			jaxbMarshaller.marshal(wrapperRules, stringWriter);
+		} catch (JAXBException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}    
+	    return stringWriter.toString();
+	}
+	
 }
