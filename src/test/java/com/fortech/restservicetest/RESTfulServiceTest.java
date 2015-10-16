@@ -44,7 +44,6 @@ import com.fortech.wrappersrule.WrapperRules;
  */
 public class RESTfulServiceTest {
 
-	private static final String URL_GET_ONE_RULE_XML = "http://localhost:9080/UVSRulesApi/car/test/json/market";
 	private static final String URL_GET_MORE_RULES_XML = "http://localhost:9080/UVSRulesApi/car/rule/xml";
 	private static final String URL_PUT_RULE_XML = "http://localhost:9080/UVSRulesApi/car/rule/xml";
 	private static final String URL_DELETE_RULE_XML = "http://localhost:9080/UVSRulesApi/car/rule/market/xml";
@@ -52,7 +51,6 @@ public class RESTfulServiceTest {
 	private static final String URL_POST_ADD_LIST_OF_RULES_IN_DB = "http://localhost:9080/UVSRulesApi/car/rule/xml";
 
 	private HttpClient client;
-	private HttpGet requestOne;
 	private HttpGet requestMoreRules;
 	private HttpPut putRequest;
 	private HttpDelete deleteRequest;
@@ -62,53 +60,11 @@ public class RESTfulServiceTest {
 	@Before
 	public void init() {
 		client = HttpClientBuilder.create().build();
-		requestOne = new HttpGet(URL_GET_ONE_RULE_XML);
 		requestMoreRules = new HttpGet(URL_GET_MORE_RULES_XML);
 		putRequest = new HttpPut(URL_PUT_RULE_XML);
 		deleteRequest = new HttpDelete(URL_DELETE_RULE_XML);
 		postRequest = new HttpPost(URL_POST_GET_BY_ID_RULE);
 		postRequestAdd = new HttpPost(URL_POST_ADD_LIST_OF_RULES_IN_DB);
-	}
-
-	/**
-	 * Method used to check if the @GET HTTP method return's a rule from the
-	 * database. The test checks if the rule is not null, that the response from
-	 * the server good (200), and that the object has the values that are
-	 * required.
-	 */
-	@Test
-	public void getWrapperRuleJAXB_checkServerResponse_Status200() {
-
-		HttpResponse response = null;
-		BufferedReader rd = null;
-		StringBuffer result = null;
-		WrapperRuleJAXB wrapperRuleJAXB = null;
-
-		try {
-			response = client.execute(requestOne);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		try {
-
-			rd = new BufferedReader(new InputStreamReader(response.getEntity()
-					.getContent()));
-			result = new StringBuffer();
-			String line = "";
-			while ((line = rd.readLine()) != null) {
-				result.append(line);
-			}
-
-		} catch (UnsupportedOperationException | IOException e) {
-			e.printStackTrace();
-		}
-
-		wrapperRuleJAXB = WrapperRuleStringToObjectConvertor.geWrapperRuleFromJSON(result.toString());
-		assertEquals(response.getStatusLine().getStatusCode(), 200);
-		assertNotNull(wrapperRuleJAXB);
-		assertEquals(wrapperRuleJAXB.getRuleType(), RuleType.MARKET);
-		assertNotNull(wrapperRuleJAXB.getJsonORxml());
 	}
 
 	/**

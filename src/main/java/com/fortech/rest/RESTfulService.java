@@ -230,7 +230,7 @@ public class RESTfulService {
 	// @formatter:off
 	@PUT
 	@Path("/{xmlOrJson}")
-	@Consumes({"aplication/xml", "application/json"})
+	@Consumes({"application/xml","application/json"})
 	public Response updateRuleInDatabase(@PathParam("xmlOrJson") String xmlOrJson, WrapperRuleJAXB wrapperRuleJAXB){
 		
 		if(xmlOrJson.equals("xml")){

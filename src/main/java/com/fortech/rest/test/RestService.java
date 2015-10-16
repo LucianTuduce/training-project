@@ -50,7 +50,7 @@ public class RestService {
 	
 	@GET
 	@Path("/getlistxml")
-	@Produces("application/json")
+	@Produces("application/xml")
 	public List<WrapperRuleJAXB> getList(){
 		MarketRuleFlattedJAXB flattedJAXB = new MarketRuleFlattedJAXB();
 		flattedJAXB.setActive(true);
