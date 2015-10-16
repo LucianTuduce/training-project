@@ -25,7 +25,7 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.fortech.convertor.WrapperRuleFlattener;
+import com.fortech.convertor.WrapperRuleBuilder;
 import com.fortech.convertor.XmlJsonStringConvertor;
 import com.fortech.enums.RuleType;
 import com.fortech.enums.StockCategory;
@@ -270,7 +270,7 @@ public class RESTfulServiceTest {
 	}
 
 	private String marshalledWrapperRuleJAXB() {
-		WrapperRuleJAXB rule = WrapperRuleFlattener.createXMLWrapperRuleFor(getMarketRule());
+		WrapperRuleJAXB rule = WrapperRuleBuilder.createXMLWrapperRuleFor(getMarketRule());
 		StringWriter writer = null;
 		try {
 			JAXBContext jaxbContext = JAXBContext.newInstance(WrapperRuleJAXB.class);

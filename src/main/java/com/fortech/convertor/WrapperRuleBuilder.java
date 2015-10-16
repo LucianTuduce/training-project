@@ -3,7 +3,7 @@ package com.fortech.convertor;
 import com.fortech.enums.RuleType;
 import com.fortech.modeljaxb.InterpretationRuleJAXB;
 import com.fortech.modeljaxb.MappingRuleJAXB;
-import com.fortech.modeljaxb.MarketRuleJAXB;
+import com.fortech.modeljaxb.MarketRuleFlattedJAXB;
 import com.fortech.wrapper.WrapperRuleJAXB;
 
 /**
@@ -14,7 +14,7 @@ import com.fortech.wrapper.WrapperRuleJAXB;
  * @author lucian.tuduce
  *
  */
-public class WrapperRuleFlattener {
+public class WrapperRuleBuilder {
 
 	/**
 	 * Method used to obtained the WrapperRuleJAXB object with the string
@@ -25,11 +25,11 @@ public class WrapperRuleFlattener {
 	 * @return wrapperrule object with the correct values in his instance
 	 *         variables
 	 */
-	public static WrapperRuleJAXB createXMLWrapperRuleFor(MarketRuleJAXB marketRuleJAXB) {
+	public static WrapperRuleJAXB createXMLWrapperRuleFor(MarketRuleFlattedJAXB marketRuleFJAXB) {
 
 		WrapperRuleJAXB marketWrapperRule = new WrapperRuleJAXB();
 		String jsonORxml = new String();
-		jsonORxml = XmlJsonStringConvertor.getXMLStringForRuleJAXB(marketRuleJAXB);
+		jsonORxml = XmlJsonStringConvertor.getXMLStringForRuleJAXB(marketRuleFJAXB);
 		marketWrapperRule.setRuleType(RuleType.MARKET);
 		marketWrapperRule.setJsonORxml(jsonORxml);
 		return marketWrapperRule;
@@ -44,11 +44,11 @@ public class WrapperRuleFlattener {
 	 * @return wrapperrule object with the correct values in his instance
 	 *         variables
 	 */
-	public static WrapperRuleJAXB createJSONWrapperRuleFor(MarketRuleJAXB marketRuleJAXB) {
+	public static WrapperRuleJAXB createJSONWrapperRuleFor(MarketRuleFlattedJAXB marketRuleFJAXB) {
 
 		WrapperRuleJAXB marketWrapperRule = new WrapperRuleJAXB();
 		String jsonORxml = new String();
-		jsonORxml = XmlJsonStringConvertor.getJSONStringForRuleJAXB(marketRuleJAXB);
+		jsonORxml = XmlJsonStringConvertor.getJSONStringForRuleJAXB(marketRuleFJAXB);
 		marketWrapperRule.setRuleType(RuleType.MARKET);
 		marketWrapperRule.setJsonORxml(jsonORxml);
 		return marketWrapperRule;

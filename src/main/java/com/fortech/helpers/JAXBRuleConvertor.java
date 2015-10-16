@@ -55,7 +55,7 @@ public class JAXBRuleConvertor {
 	}
 
 	/**
-	 * Method used to get the MappingRule with all the properties copied from
+	 * Method used to get the MarketRule with all the properties copied from
 	 * the MappingRuleJAXB
 	 * 
 	 * @param wrapperRuleJAXB
@@ -145,14 +145,14 @@ public class JAXBRuleConvertor {
 	 *            rule that the properties will be copied to the jaxb rule
 	 * @return the jaxb rule with the same properties as the rule
 	 */
-	public static MarketRuleJAXB copyPropertiesFrom(MarketRule marketRule) {
-		MarketRuleJAXB marketRuleJAXB = new MarketRuleJAXB();
+	public static MarketRuleFlattedJAXB copyPropertiesFrom(MarketRule marketRule) {
+		MarketRuleFlattedJAXB marketRuleFlattedJAXB = new MarketRuleFlattedJAXB();
 		try {
-			BeanUtils.copyProperties(marketRuleJAXB, marketRule);
+			BeanUtils.copyProperties(marketRuleFlattedJAXB, marketRule);
 		} catch (IllegalAccessException | InvocationTargetException e) {
 			e.printStackTrace();
 		}
-		return marketRuleJAXB;
+		return marketRuleFlattedJAXB;
 	}
 
 	/**

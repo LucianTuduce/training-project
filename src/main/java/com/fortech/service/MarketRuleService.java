@@ -72,20 +72,20 @@ public class MarketRuleService {
 	 * 
 	 * @return list with all the rules in the database
 	 */
-	public List<MarketRuleJAXB> getAllMarketRule() {
+	public List<MarketRuleFlattedJAXB> getAllMarketRule() {
 		@SuppressWarnings("unchecked")
 		TypedQuery<MarketRule> marketQuery = (TypedQuery<MarketRule>) entityManager
 				.createNamedQuery(MarketRule.MARKETRULE_FIND_ALL);
 		List<MarketRule> marketRules = new ArrayList<MarketRule>(
 				marketQuery.getResultList());
-		List<MarketRuleJAXB> marketRulesC = new ArrayList<MarketRuleJAXB>();
+		List<MarketRuleFlattedJAXB> marketRulesFlattedJaxB = new ArrayList<MarketRuleFlattedJAXB>();
 
 		for (MarketRule rule : marketRules) {
-			MarketRuleJAXB marketRuleJAXB = JAXBRuleConvertor
+			MarketRuleFlattedJAXB marketRuleFJAXB = JAXBRuleConvertor
 					.copyPropertiesFrom(rule);
-			marketRulesC.add(marketRuleJAXB);
+			marketRulesFlattedJaxB.add(marketRuleFJAXB);
 		}
-		return marketRulesC;
+		return marketRulesFlattedJaxB;
 	}
 
 	/**
