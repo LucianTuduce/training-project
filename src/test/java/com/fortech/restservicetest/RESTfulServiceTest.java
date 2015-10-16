@@ -14,7 +14,6 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
 import org.apache.http.HttpResponse;
-import org.apache.http.ProtocolVersion;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
@@ -25,15 +24,13 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.fortech.convertor.WrapperRuleFlattener;
+import com.fortech.convertor.WrapperRuleBuilder;
 import com.fortech.convertor.XmlJsonStringConvertor;
 import com.fortech.enums.RuleType;
 import com.fortech.enums.StockCategory;
-import com.fortech.model.MarketRulePK;
 import com.fortech.modeljaxb.InterpretationRuleJAXB;
 import com.fortech.modeljaxb.MappingRuleJAXB;
 import com.fortech.modeljaxb.MarketRuleFlattedJAXB;
-import com.fortech.modeljaxb.MarketRuleJAXB;
 import com.fortech.testconvertor.WrapperRuleStringToObjectConvertor;
 import com.fortech.wrapper.WrapperRuleJAXB;
 import com.fortech.wrappersrule.WrapperRules;
@@ -173,7 +170,6 @@ public class RESTfulServiceTest {
 		}	
 		assertNotNull(response);
 		assertEquals(200, response.getStatusLine().getStatusCode());
-		assertEquals(new ProtocolVersion("HTTP", 1, 1), response.getStatusLine().getProtocolVersion());
 
 	}
 
@@ -181,7 +177,7 @@ public class RESTfulServiceTest {
 	public void addRulesInDatabase_AddedRulesInDatabase_SuccessStatus200() {
 		WrapperRules wrapperRules = new WrapperRules();
 		wrapperRules.setWrapperRules(getList());
-		String xmlForm = WrapperRuleStringToObjectConvertor.getMarshaledListINString(wrapperRules);
+		String xmlForm = WrapperRuleStringToObjectConvertor.getMarshaledListInString(wrapperRules);
 		HttpResponse response = null;
 		
 		postRequestAdd.addHeader("Content-Type", "application/xml");
@@ -196,7 +192,6 @@ public class RESTfulServiceTest {
 		
 		assertNotNull(response);
 		assertEquals(200, response.getStatusLine().getStatusCode());
-		assertEquals(new ProtocolVersion("HTTP", 1, 1), response.getStatusLine().getProtocolVersion());
 	}
 
 	
@@ -216,7 +211,6 @@ public class RESTfulServiceTest {
 		}
 		assertNotNull(response);
 		assertEquals(400, response.getStatusLine().getStatusCode());
-		assertEquals(new ProtocolVersion("HTTP", 1, 1), response.getStatusLine().getProtocolVersion());
 
 	}
 
@@ -253,24 +247,10 @@ public class RESTfulServiceTest {
 //		assertEquals(new ProtocolVersion("HTTP", 1, 1), response.getStatusLine().getProtocolVersion());
 	}
 	
-	private MarketRuleJAXB getMarketRule() {
-		MarketRuleJAXB marketRuleJAXB = new MarketRuleJAXB();
-		marketRuleJAXB.setActive((short) 1);
-		marketRuleJAXB.setRule("Old car");
-		marketRuleJAXB.setId(getMarketRulePKforTest());
-		return marketRuleJAXB;
-	}
 
-	private MarketRulePK getMarketRulePKforTest() {
-		MarketRulePK marketRulePK = new MarketRulePK();
-		marketRulePK.setBranch(44);
-		marketRulePK.setCountryNumber("dddd");
-		marketRulePK.setStockCategory((short) 0);
-		return marketRulePK;
-	}
 
 	private String marshalledWrapperRuleJAXB() {
-		WrapperRuleJAXB rule = WrapperRuleFlattener.createXMLWrapperRuleFor(getMarketRule());
+		WrapperRuleJAXB rule = WrapperRuleBuilder.createXMLWrapperRuleFor(getMarketRule());
 		StringWriter writer = null;
 		try {
 			JAXBContext jaxbContext = JAXBContext.newInstance(WrapperRuleJAXB.class);
@@ -284,6 +264,16 @@ public class RESTfulServiceTest {
 		return writer.toString();
 	}
 	
+	private MarketRuleFlattedJAXB getMarketRule() {
+		MarketRuleFlattedJAXB flattedJAXB = new MarketRuleFlattedJAXB();
+		flattedJAXB.setActive(true);
+		flattedJAXB.setBranch(56);
+		flattedJAXB.setCountryNumber("CC-CC-CCC");
+		flattedJAXB.setRule("Old Car");
+		flattedJAXB.setStockCategory(StockCategory.NEW);
+		return flattedJAXB;
+	}
+
 	public List<WrapperRuleJAXB> getList(){
 		String xmlFormForMarketRuleFlattedJAXB = createDeafultMarketRule();
 		String xmlFormForMappingRuleJAXB = cretaeDefaultMappingRule();

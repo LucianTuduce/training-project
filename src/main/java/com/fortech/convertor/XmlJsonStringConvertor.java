@@ -11,7 +11,6 @@ import org.codehaus.jackson.map.ObjectMapper;
 import com.fortech.modeljaxb.InterpretationRuleJAXB;
 import com.fortech.modeljaxb.MappingRuleJAXB;
 import com.fortech.modeljaxb.MarketRuleFlattedJAXB;
-import com.fortech.modeljaxb.MarketRuleJAXB;
 
 /**
  * Class used to convert from the object to the corresponding XML or JSON format
@@ -36,27 +35,6 @@ public class XmlJsonStringConvertor {
 			Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
 			jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 			jaxbMarshaller.marshal(mappingRuleJAXB, stringWriter);
-		} catch (JAXBException e) {
-			e.printStackTrace();
-		}
-		return stringWriter.toString();
-	}
-
-	/**
-	 * Method used to convert from the MarketRuleJAXB object to the XML string
-	 * form of the object
-	 * 
-	 * @param marketRuleJAXB
-	 *            the marketRuleJAXB object that will be converted
-	 * @return the XML string form of the marketRuleJAXB object
-	 */
-	public static String getXMLStringForRuleJAXB(MarketRuleJAXB marketRuleJAXB) {
-		StringWriter stringWriter = new StringWriter();
-		try {
-			JAXBContext jaxbContext = JAXBContext.newInstance(MarketRuleJAXB.class);
-			Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
-			jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-			jaxbMarshaller.marshal(marketRuleJAXB, stringWriter);
 		} catch (JAXBException e) {
 			e.printStackTrace();
 		}
@@ -119,27 +97,6 @@ public class XmlJsonStringConvertor {
 		StringWriter objectStringForm = new StringWriter();
 		try {
 			mapper.writeValue(objectStringForm, mappingRuleJAXB);
-		} catch (JsonGenerationException | JsonMappingException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return objectStringForm.toString();
-	}
-
-	/**
-	 * Method used to convert from the MarketRuleJAXB object to the JSON string
-	 * form of the object
-	 * 
-	 * @param marketRuleJAXB
-	 *            the marketRuleJAXB object that will be converted
-	 * @return the JSON string form of the marketRuleJAXB object
-	 */
-	public static String getJSONStringForRuleJAXB(MarketRuleJAXB marketRuleJAXB) {
-		ObjectMapper mapper = new ObjectMapper();
-		StringWriter objectStringForm = new StringWriter();
-		try {
-			mapper.writeValue(objectStringForm, marketRuleJAXB);
 		} catch (JsonGenerationException | JsonMappingException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

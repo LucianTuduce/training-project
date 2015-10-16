@@ -3,7 +3,7 @@ package com.fortech.convertor;
 import com.fortech.enums.RuleType;
 import com.fortech.modeljaxb.InterpretationRuleJAXB;
 import com.fortech.modeljaxb.MappingRuleJAXB;
-import com.fortech.modeljaxb.MarketRuleJAXB;
+import com.fortech.modeljaxb.MarketRuleFlattedJAXB;
 import com.fortech.wrapper.WrapperRuleJAXB;
 
 /**
@@ -14,22 +14,22 @@ import com.fortech.wrapper.WrapperRuleJAXB;
  * @author lucian.tuduce
  *
  */
-public class WrapperRuleFlattener {
+public class WrapperRuleBuilder {
 
 	/**
 	 * Method used to obtained the WrapperRuleJAXB object with the string
 	 * variable having the value of the converted method parameter to XML form
 	 * 
-	 * @param marketRuleJAXB
+	 * @param MarketRuleFlattedJAXB
 	 *            the rule that will be converted to an XML form
 	 * @return wrapperrule object with the correct values in his instance
 	 *         variables
 	 */
-	public static WrapperRuleJAXB createXMLWrapperRuleFor(MarketRuleJAXB marketRuleJAXB) {
+	public static WrapperRuleJAXB createXMLWrapperRuleFor(MarketRuleFlattedJAXB MarketRuleFlattedJAXB) {
 
 		WrapperRuleJAXB marketWrapperRule = new WrapperRuleJAXB();
 		String jsonORxml = new String();
-		jsonORxml = XmlJsonStringConvertor.getXMLStringForRuleJAXB(marketRuleJAXB);
+		jsonORxml = XmlJsonStringConvertor.getXMLStringForRuleJAXB(MarketRuleFlattedJAXB);
 		marketWrapperRule.setRuleType(RuleType.MARKET);
 		marketWrapperRule.setJsonORxml(jsonORxml);
 		return marketWrapperRule;
@@ -39,16 +39,16 @@ public class WrapperRuleFlattener {
 	 * Method used to obtained the WrapperRuleJAXB object with the string
 	 * variable having the value of the converted method parameter to JSON form
 	 * 
-	 * @param marketRuleJAXB
+	 * @param MarketRuleFlattedJAXB
 	 *            the rule that will be converted to an JSON form
 	 * @return wrapperrule object with the correct values in his instance
 	 *         variables
 	 */
-	public static WrapperRuleJAXB createJSONWrapperRuleFor(MarketRuleJAXB marketRuleJAXB) {
+	public static WrapperRuleJAXB createJSONWrapperRuleFor(MarketRuleFlattedJAXB MarketRuleFlattedJAXB) {
 
 		WrapperRuleJAXB marketWrapperRule = new WrapperRuleJAXB();
 		String jsonORxml = new String();
-		jsonORxml = XmlJsonStringConvertor.getJSONStringForRuleJAXB(marketRuleJAXB);
+		jsonORxml = XmlJsonStringConvertor.getJSONStringForRuleJAXB(MarketRuleFlattedJAXB);
 		marketWrapperRule.setRuleType(RuleType.MARKET);
 		marketWrapperRule.setJsonORxml(jsonORxml);
 		return marketWrapperRule;

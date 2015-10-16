@@ -12,7 +12,6 @@ import com.fortech.helpers.JAXBRuleConvertor;
 import com.fortech.model.MarketRule;
 import com.fortech.model.MarketRulePK;
 import com.fortech.modeljaxb.MarketRuleFlattedJAXB;
-import com.fortech.modeljaxb.MarketRuleJAXB;
 import com.fortech.wrapper.WrapperRuleJAXB;
 
 /**
@@ -72,18 +71,18 @@ public class MarketRuleService {
 	 * 
 	 * @return list with all the rules in the database
 	 */
-	public List<MarketRuleJAXB> getAllMarketRule() {
+	public List<MarketRuleFlattedJAXB> getAllMarketRule() {
 		@SuppressWarnings("unchecked")
 		TypedQuery<MarketRule> marketQuery = (TypedQuery<MarketRule>) entityManager
 				.createNamedQuery(MarketRule.MARKETRULE_FIND_ALL);
 		List<MarketRule> marketRules = new ArrayList<MarketRule>(
 				marketQuery.getResultList());
-		List<MarketRuleJAXB> marketRulesC = new ArrayList<MarketRuleJAXB>();
+		List<MarketRuleFlattedJAXB> marketRulesC = new ArrayList<MarketRuleFlattedJAXB>();
 
 		for (MarketRule rule : marketRules) {
-			MarketRuleJAXB marketRuleJAXB = JAXBRuleConvertor
+			MarketRuleFlattedJAXB MarketRuleFlattedJAXB = JAXBRuleConvertor
 					.copyPropertiesFrom(rule);
-			marketRulesC.add(marketRuleJAXB);
+			marketRulesC.add(MarketRuleFlattedJAXB);
 		}
 		return marketRulesC;
 	}
