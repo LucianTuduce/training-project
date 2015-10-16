@@ -75,11 +75,13 @@ public class RESTfulService {
 			for (MarketRuleFlattedJAXB market : marketRuleFJaxB) {
 				rules.add(WrapperRuleBuilder.createXMLWrapperRuleFor(market));
 			}
+
 		} else if (xmlORjson.equals("json")) {
 			for (MarketRuleFlattedJAXB market : marketRuleFJaxB) {
-				rules.add(WrapperRuleBuilder.createJSONWrapperRuleFor(market));		
+				rules.add(WrapperRuleBuilder.createJSONWrapperRuleFor(market));
+			}
 		}
-		}
+
 		mappignRuleJAXB = mappingRuleService.getAllMappingRule();
 		if (xmlORjson.equals("xml")) {
 			for (MappingRuleJAXB mapping : mappignRuleJAXB) {
@@ -90,7 +92,6 @@ public class RESTfulService {
 			for (MappingRuleJAXB mapping : mappignRuleJAXB) {
 				rules.add(WrapperRuleBuilder
 						.createJSONWrapperRuleFor(mapping));
-				rules.add(WrapperRuleBuilder.createJSONWrapperRuleFor(mapping));
 			}
 		}
 		
@@ -104,13 +105,11 @@ public class RESTfulService {
 			for (InterpretationRuleJAXB interpretation : interpretationRuleJAXB) {
 				rules.add(WrapperRuleBuilder
 						.createJSONWrapperRuleFor(interpretation));
-				rules.add(WrapperRuleBuilder.createJSONWrapperRuleFor(interpretation));
 			}
 		}
 
 		return rules;
 	}
-
 	@POST
 	@Path("/{xmlOrJson}/{ruleType}")
 	@Produces({"application/xml", "application/json"})
