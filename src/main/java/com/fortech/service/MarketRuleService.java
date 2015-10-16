@@ -7,12 +7,11 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.persistence.*;
 import com.fortech.convertor.MarketRuleFlattener;
-import com.fortech.convertor.XmlJsonObjectConvertor;
 import com.fortech.helpers.JAXBRuleConvertor;
 import com.fortech.model.MarketRule;
 import com.fortech.model.MarketRulePK;
 import com.fortech.modeljaxb.MarketRuleFlattedJAXB;
-import com.fortech.wrapper.WrapperRuleJAXB;
+import com.fortech.modeljaxb.MarketRuleIdJAXB;
 
 /**
  * Service class for the MarketRule.
@@ -107,23 +106,24 @@ public class MarketRuleService {
 	 * @param id of the rule that will be obtained from the database.
 	 * @return he rule that will have the id as the parameter of the method
 	 */
-	public MarketRuleFlattedJAXB getById(WrapperRuleJAXB wrapperRuleJAXB) {
+	public MarketRuleFlattedJAXB getById(MarketRuleIdJAXB id) {
 
 		MarketRuleFlattener convertor = new MarketRuleFlattener();
-		MarketRuleFlattedJAXB marketRuleFlattedJAXB = XmlJsonObjectConvertor.getMarketRuleFFromXML(wrapperRuleJAXB.getJsonORxml());
 		
 		MarketRulePK pk = new MarketRulePK();
-		pk.setBranch(marketRuleFlattedJAXB.getBranch());
-		pk.setCountryNumber(marketRuleFlattedJAXB.getCountryNumber());
-		pk.setStockCategory(convertor.changeEnumToShort(marketRuleFlattedJAXB.getStockCategory()));
+		pk.setBranch(id.getBranch());
+		pk.setCountryNumber(id.getCountryNumber());
+		pk.setStockCategory(convertor.changeEnumToShort(id.getStockCategory()));
 		
 		MarketRule marketRule = entityManager.find(MarketRule.class, pk);
-				
+			
+		MarketRuleFlattedJAXB marketRuleFlattedJAXB = new MarketRuleFlattedJAXB();
+		
 		marketRuleFlattedJAXB.setActive(convertor.changeShortToBoolean(marketRule.getActive()));
-		marketRuleFlattedJAXB.setBranch(pk.getBranch());
-		marketRuleFlattedJAXB.setCountryNumber(pk.getCountryNumber());
+		marketRuleFlattedJAXB.setBranch(marketRule.getId().getBranch());
+		marketRuleFlattedJAXB.setCountryNumber(marketRule.getId().getCountryNumber());
 		marketRuleFlattedJAXB.setRule(marketRule.getRule());
-		marketRuleFlattedJAXB.setStockCategory(convertor.changeShortToEnum(pk.getStockCategory()));
+		marketRuleFlattedJAXB.setStockCategory(convertor.changeShortToEnum(marketRule.getId().getStockCategory()));
 		
 		return marketRuleFlattedJAXB;
 	}
