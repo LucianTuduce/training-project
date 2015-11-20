@@ -15,7 +15,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
-import com.fortech.convertor.MarketRuleFlattener;
 import com.fortech.convertor.WrapperRuleBuilder;
 import com.fortech.convertor.XmlJsonObjectConvertor;
 import com.fortech.convertor.XmlJsonStringConvertor;
@@ -68,6 +67,8 @@ public class RESTfulService {
 	@Produces({ "application/xml", "application/json" })
 	public List<WrapperRuleJAXB> getRules(@PathParam("xmlORjson") String xmlORjson) {
 
+		
+		System.out.println("I am here");
 		List<WrapperRuleJAXB> rules = new ArrayList<WrapperRuleJAXB>();
 		List<MarketRuleFlattedJAXB> marketRuleFJaxB = new ArrayList<MarketRuleFlattedJAXB>();
 		List<MappingRuleJAXB> mappignRuleJAXB = new ArrayList<MappingRuleJAXB>();
@@ -119,6 +120,8 @@ public class RESTfulService {
 	public String getRulesByID(@PathParam("xmlOrJson") String xmlOrJson,
 			@PathParam("ruleType") String ruleType, WrapperRuleJAXB wrapperRuleJAXB) {
 
+		
+		
 		if (ruleType.equals("market")) {
 			MarketRuleIdJAXB id = new MarketRuleIdJAXB();
 			MarketRuleFlattedJAXB market = XmlJsonObjectConvertor.getMarketRuleFFromXML(wrapperRuleJAXB.getJsonORxml());
