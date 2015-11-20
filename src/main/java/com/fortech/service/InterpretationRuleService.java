@@ -2,12 +2,15 @@ package com.fortech.service;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+
+import com.fortech.convertor.ModelToJAXBModelConvertor;
 import com.fortech.convertor.XmlJsonObjectConvertor;
 import com.fortech.model.InterpretationRule;
 import com.fortech.modeljaxb.InterpretationRuleJAXB;
@@ -86,7 +89,8 @@ public class InterpretationRuleService {
 	 * @return the rule that will have the id as the parameter of the method
 	 */
 	public InterpretationRule findById(int idInterpretationRule) {
-		return entityManager.find(InterpretationRule.class, idInterpretationRule);
+		InterpretationRule rule = entityManager.find(InterpretationRule.class, idInterpretationRule);
+		return rule;
 	}
 
 	/**
@@ -98,19 +102,16 @@ public class InterpretationRuleService {
 	public List<InterpretationRuleJAXB> getAllInterpretationRule() {
 		@SuppressWarnings("unchecked")
 		TypedQuery<InterpretationRule> interpretationQuery = (TypedQuery<InterpretationRule>) entityManager.createNamedQuery(InterpretationRule.FIND_ALL_INTERPRETATION_RULE);
-		List<InterpretationRule> interpretationRule = new ArrayList<InterpretationRule>(interpretationQuery.getResultList());
+		List<InterpretationRule> interpretationRule = new ArrayList<InterpretationRule>(interpretationQuery.getResultList());	
+		return createJAXBList(interpretationRule);
+	}
 
+	private List<InterpretationRuleJAXB> createJAXBList(List<InterpretationRule> interpretationRule) {
 		List<InterpretationRuleJAXB> interpretationRuleJaxB = new ArrayList<InterpretationRuleJAXB>();
 				
-		for(InterpretationRule i : interpretationRule){
-			InterpretationRuleJAXB j = new InterpretationRuleJAXB();
-			j.setId(i.getId());
-			j.setTargetVehicles(i.getTargetVehicles());
-			j.setInterpretationInnerRules(i.getInterpretationInnerRules());
-						
-			interpretationRuleJaxB.add(j);
+		for(InterpretationRule rule : interpretationRule){
+			interpretationRuleJaxB.add(ModelToJAXBModelConvertor.getInterpretationRuleJAXB(rule));
 		}
-		
 		return interpretationRuleJaxB;
 	}
 
@@ -123,15 +124,11 @@ public class InterpretationRuleService {
 	 * @return the rule that will have the id as the parameter of the method
 	 */
 	public InterpretationRuleJAXB getById(WrapperRuleJAXB wrapperRuleJAXB) {
-		InterpretationRuleJAXB interpretationRuleJAXB = new InterpretationRuleJAXB();
-		
-		int id = XmlJsonObjectConvertor.getInterpretationRuleFromXML(wrapperRuleJAXB.getJsonORxml()).getId();
-		InterpretationRule interpretationRule = entityManager.find(InterpretationRule.class, id);
-		
-		interpretationRuleJAXB.setId(interpretationRule.getId());
-		interpretationRuleJAXB.setInterpretationInnerRules(interpretationRule.getInterpretationInnerRules());
-		interpretationRuleJAXB.setTargetVehicles(interpretationRule.getTargetVehicles());
-		
-		return interpretationRuleJAXB;
+		int id = XmlJsonObjectConvertor.getInterpretationRuleFromXML(wrapperRuleJAXB.getJsonORxml()).getId();	
+		return createJAXBRule(id);
+	}
+
+	private InterpretationRuleJAXB createJAXBRule(int id) {		
+		return ModelToJAXBModelConvertor.getInterpretationRuleJAXB(entityManager.find(InterpretationRule.class, id));
 	}
 }

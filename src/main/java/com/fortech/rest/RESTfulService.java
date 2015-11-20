@@ -15,10 +15,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
-
-
-
-
 import com.fortech.convertor.ModelToJAXBModelConvertor;
 import com.fortech.convertor.WrapperRuleBuilder;
 import com.fortech.convertor.XmlJsonObjectConvertor;
@@ -58,15 +54,6 @@ public class RESTfulService {
 	@EJB
 	private InterpretationRuleService interpretationRuleService;
 
-//	@EJB
-//	private RuleService<MarketRule, MarketRulePK> marketService;
-//
-//	@EJB
-//	private RuleService<MappingRule, Integer> mappingService;
-//
-//	@EJB
-//	private RuleService<InterpretationRule, Integer> interpretationService;
-
 	/**
 	 * method that return to the web all the rules with the type ruleType in the
 	 * format xmlORjson asked
@@ -82,25 +69,19 @@ public class RESTfulService {
 	@Path("/{xmlORjson}")
 	@Produces({ "application/xml", "application/json" })
 	public List<WrapperRuleJAXB> getRules(@PathParam("xmlORjson") String xmlORjson) {
-
-//		String queryToGetAllMarketRules = MarketRule.MARKETRULE_FIND_ALL;
-//		String queryToGetAllMappingRules = MappingRule.FIND_ALL_MAPPING_RULE;
-//		String queryToGetAllInterpretationRules = InterpretationRule.FIND_ALL_INTERPRETATION_RULE;
 		
-		//List<MarketRule> marketRules = new ArrayList<>(marketRuleService.getAllMarketRule(MarketRule.FIND_ALL_MARKET_RULE));
-		//List<MappingRule> mappignRules = new ArrayList<>(mappingService.getRules( MappingRule.FIND_ALL_MAPPING_RULE));
-		//List<InterpretationRule> interpretationRules = new ArrayList<>(interpretationService.getRules(InterpretationRule.FIND_ALL_INTERPRETATION_RULE));
+		long s = 0;
+		for(int i=0;i<=501;i++){
+			s+=i;
+		}
+		System.out.println(s);
 		
 		List<WrapperRuleJAXB> rules = new ArrayList<WrapperRuleJAXB>();
-//		List<MarketRuleFlattedJAXB> marketRulesFJaxB = new ArrayList<MarketRuleFlattedJAXB>(ModelToJAXBModelConvertor.getAllMarketRulesConvertedToJAXBRules(marketRules));
-//		List<MappingRuleJAXB> mappignRulesJAXB = new ArrayList<MappingRuleJAXB>(ModelToJAXBModelConvertor.getAllMappingRulesConvertedToJAXBRules(mappignRules));
-//		List<InterpretationRuleJAXB> interpretationRulesJAXB = new ArrayList<InterpretationRuleJAXB>(ModelToJAXBModelConvertor.getAllInterpretationRulesConvertedToJAXBRules(interpretationRules));
 		
 		List<MarketRuleFlattedJAXB> marketRulesFJaxB = null ;
 		List<MappingRuleJAXB> mappignRulesJAXB = null;
 		List<InterpretationRuleJAXB> interpretationRulesJAXB = null;
 		
-
 		marketRulesFJaxB = new ArrayList<MarketRuleFlattedJAXB>(marketRuleService.getAllMarketRule());
 		mappignRulesJAXB = new ArrayList<MappingRuleJAXB>(mappingRuleService.getAllMappingRule());
 		interpretationRulesJAXB = new ArrayList<InterpretationRuleJAXB>(interpretationRuleService.getAllInterpretationRule());
@@ -138,14 +119,9 @@ public class RESTfulService {
 	@Path("/{xmlOrJson}/{ruleType}")
 	@Produces({"application/xml", "application/json"})
 	public String getRulesByID(@PathParam("xmlOrJson") String xmlOrJson, @PathParam("ruleType") String ruleType, WrapperRuleJAXB wrapperRuleJAXB) {
-
+		
 		if (ruleType.equals("market")) {
-			MarketRuleIdJAXB id = new MarketRuleIdJAXB();
-			MarketRuleFlattedJAXB market = XmlJsonObjectConvertor.getMarketRuleFFromXML(wrapperRuleJAXB.getJsonORxml());
-			id.setBranch(market.getBranch());
-			id.setCountryNumber(market.getCountryNumber());
-			id.setStockCategory(market.getStockCategory());
-			
+			MarketRuleIdJAXB id = obtainMarketRuleID(wrapperRuleJAXB);
 			MarketRuleFlattedJAXB marketRuleFJAXB = marketRuleService.getById(id);
 			if (xmlOrJson.equals("xml")) {
 				return XmlJsonStringConvertor.getXMLStringForRuleJAXB(marketRuleFJAXB);
@@ -173,7 +149,17 @@ public class RESTfulService {
 				return XmlJsonStringConvertor.getJSONStringForRuleJAXB(interpretationRuleJAXB);
 			}
 		}	
-		return "NBope";
+		return "Nope";
+	}
+
+
+	private MarketRuleIdJAXB obtainMarketRuleID(WrapperRuleJAXB wrapperRuleJAXB) {
+		MarketRuleIdJAXB id = new MarketRuleIdJAXB();
+		MarketRuleFlattedJAXB market = XmlJsonObjectConvertor.getMarketRuleFFromXML(wrapperRuleJAXB.getJsonORxml());
+		id.setBranch(market.getBranch());
+		id.setCountryNumber(market.getCountryNumber());
+		id.setStockCategory(market.getStockCategory());
+		return id;
 	}
 	
 	

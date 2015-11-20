@@ -22,12 +22,12 @@ public class InterpretationRule{
 	private int id;
 
 	// bi-directional many-to-one association to TargetVehicle
-	@OneToMany(mappedBy = "interpretationRule", cascade = CascadeType.ALL)
+	@OneToMany(fetch=FetchType.EAGER, mappedBy = "interpretationRule", cascade = CascadeType.ALL)
 	@JsonManagedReference
 	private List<TargetVehicle> targetVehicles;
 
 	// bi-directional many-to-one association to InterpretationInnerRule
-	@OneToMany(mappedBy = "interpretationRule", cascade = CascadeType.ALL)
+	@OneToMany(fetch=FetchType.EAGER, mappedBy = "interpretationRule", cascade = CascadeType.ALL)
 	@JsonManagedReference
 	private List<InterpretationInnerRule> interpretationInnerRules;
 

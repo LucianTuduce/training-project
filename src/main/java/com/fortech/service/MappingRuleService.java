@@ -9,6 +9,8 @@ import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+
+import com.fortech.convertor.ModelToJAXBModelConvertor;
 import com.fortech.convertor.XmlJsonObjectConvertor;
 import com.fortech.model.MappingRule;
 import com.fortech.modeljaxb.MappingRuleJAXB;
@@ -73,22 +75,16 @@ public class MappingRuleService {
 	public List<MappingRuleJAXB> getAllMappingRule() {
 		@SuppressWarnings("unchecked")
 		TypedQuery<MappingRule> mappingQuery = (TypedQuery<MappingRule>) entityManager.createNamedQuery(MappingRule.FIND_ALL_MAPPING_RULE);
-
 		List<MappingRule> mappingRule = new ArrayList<MappingRule>(mappingQuery.getResultList());
-		
-		List<MappingRuleJAXB> mappingRulesJaxB = new ArrayList<MappingRuleJAXB>();
-		
-		for (MappingRule i : mappingRule) {
-			
-			MappingRuleJAXB j = new MappingRuleJAXB();
-			j.setId(i.getId());
-			j.setSourceValue(i.getSourceValue());
-			j.setTargetValue(i.getTargetValue());
-			j.setVehicleAttribute(i.getVehicleAttribute());
-			
-			mappingRulesJaxB.add(j);
-		}
+		return createJAXBList(mappingRule);
+	}
 
+	private List<MappingRuleJAXB> createJAXBList(List<MappingRule> mappingRule) {
+		List<MappingRuleJAXB> mappingRulesJaxB = new ArrayList<MappingRuleJAXB>();
+
+		for (MappingRule rule : mappingRule) {		
+			mappingRulesJaxB.add(ModelToJAXBModelConvertor.getMappingRuleJAXB(rule));
+		}
 		return mappingRulesJaxB;
 	}
 	
@@ -114,17 +110,13 @@ public class MappingRuleService {
 	 * @return the rule that will have the id as the parameter of the method
 	 */
 	public MappingRuleJAXB getById(WrapperRuleJAXB wrapperRuleJAXB) {
-		
-		MappingRuleJAXB mappingRuleJAXB = new MappingRuleJAXB();
 		int id = XmlJsonObjectConvertor.getMappingRuleFromXML(wrapperRuleJAXB.getJsonORxml()).getId();
+		return createJAXBRule(id);
+	}
+
+	private MappingRuleJAXB createJAXBRule(int id) {
 		MappingRule mappingRule = entityManager.find(MappingRule.class, id);
-		
-		mappingRuleJAXB.setId(mappingRule.getId());
-		mappingRuleJAXB.setSourceValue(mappingRule.getSourceValue());
-		mappingRuleJAXB.setTargetValue(mappingRule.getTargetValue());
-		mappingRuleJAXB.setVehicleAttribute(mappingRule.getVehicleAttribute());
-		
-		return mappingRuleJAXB;
+		return ModelToJAXBModelConvertor.getMappingRuleJAXB(mappingRule);
 	}
 	
 }
