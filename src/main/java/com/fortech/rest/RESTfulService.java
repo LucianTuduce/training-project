@@ -69,13 +69,7 @@ public class RESTfulService {
 	@Path("/{xmlORjson}")
 	@Produces({ "application/xml", "application/json" })
 	public List<WrapperRuleJAXB> getRules(@PathParam("xmlORjson") String xmlORjson) {
-		
-		long s = 0;
-		for(int i=0;i<=501;i++){
-			s+=i;
-		}
-		System.out.println(s);
-		
+
 		List<WrapperRuleJAXB> rules = new ArrayList<WrapperRuleJAXB>();
 		
 		List<MarketRuleFlattedJAXB> marketRulesFJaxB = null ;
