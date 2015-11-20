@@ -1,7 +1,5 @@
 package com.fortech.model;
 
-import java.io.Serializable;
-
 import javax.persistence.*;
 
 import org.codehaus.jackson.annotate.JsonManagedReference;
@@ -15,9 +13,14 @@ import java.util.List;
 @Entity
 @Table(name = "\"InterpretationRule\"", schema="DARIAD")
 @NamedQuery(name = "InterpretationRule.findAll", query = "SELECT i FROM InterpretationRule i")
-public class InterpretationRule implements Serializable {
+public class InterpretationRule extends BaseRuleModel {
 	
+	
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
+
 	public static final String FIND_ALL_INTERPRETATION_RULE = "InterpretationRule.findAll";
 	
 	@Id

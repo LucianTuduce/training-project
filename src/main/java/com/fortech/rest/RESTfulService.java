@@ -15,12 +15,18 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
-import com.fortech.convertor.MarketRuleFlattener;
+
+
+
+
+import com.fortech.convertor.ModelToJAXBModelConvertor;
 import com.fortech.convertor.WrapperRuleBuilder;
 import com.fortech.convertor.XmlJsonObjectConvertor;
 import com.fortech.convertor.XmlJsonStringConvertor;
 import com.fortech.enums.RuleType;
 import com.fortech.helpers.JAXBRuleConvertor;
+import com.fortech.model.InterpretationRule;
+import com.fortech.model.MappingRule;
 import com.fortech.model.MarketRule;
 import com.fortech.model.MarketRuleFlatted;
 import com.fortech.modeljaxb.InterpretationRuleJAXB;
@@ -52,6 +58,15 @@ public class RESTfulService {
 	@EJB
 	private InterpretationRuleService interpretationRuleService;
 
+//	@EJB
+//	private RuleService<MarketRule, MarketRulePK> marketService;
+//
+//	@EJB
+//	private RuleService<MappingRule, Integer> mappingService;
+//
+//	@EJB
+//	private RuleService<InterpretationRule, Integer> interpretationService;
+
 	/**
 	 * method that return to the web all the rules with the type ruleType in the
 	 * format xmlORjson asked
@@ -68,56 +83,61 @@ public class RESTfulService {
 	@Produces({ "application/xml", "application/json" })
 	public List<WrapperRuleJAXB> getRules(@PathParam("xmlORjson") String xmlORjson) {
 
+//		String queryToGetAllMarketRules = MarketRule.MARKETRULE_FIND_ALL;
+//		String queryToGetAllMappingRules = MappingRule.FIND_ALL_MAPPING_RULE;
+//		String queryToGetAllInterpretationRules = InterpretationRule.FIND_ALL_INTERPRETATION_RULE;
+		
+		//List<MarketRule> marketRules = new ArrayList<>(marketRuleService.getAllMarketRule(MarketRule.FIND_ALL_MARKET_RULE));
+		//List<MappingRule> mappignRules = new ArrayList<>(mappingService.getRules( MappingRule.FIND_ALL_MAPPING_RULE));
+		//List<InterpretationRule> interpretationRules = new ArrayList<>(interpretationService.getRules(InterpretationRule.FIND_ALL_INTERPRETATION_RULE));
+		
 		List<WrapperRuleJAXB> rules = new ArrayList<WrapperRuleJAXB>();
-		List<MarketRuleFlattedJAXB> marketRuleFJaxB = new ArrayList<MarketRuleFlattedJAXB>();
-		List<MappingRuleJAXB> mappignRuleJAXB = new ArrayList<MappingRuleJAXB>();
-		List<InterpretationRuleJAXB> interpretationRuleJAXB = new ArrayList<InterpretationRuleJAXB>();
+//		List<MarketRuleFlattedJAXB> marketRulesFJaxB = new ArrayList<MarketRuleFlattedJAXB>(ModelToJAXBModelConvertor.getAllMarketRulesConvertedToJAXBRules(marketRules));
+//		List<MappingRuleJAXB> mappignRulesJAXB = new ArrayList<MappingRuleJAXB>(ModelToJAXBModelConvertor.getAllMappingRulesConvertedToJAXBRules(mappignRules));
+//		List<InterpretationRuleJAXB> interpretationRulesJAXB = new ArrayList<InterpretationRuleJAXB>(ModelToJAXBModelConvertor.getAllInterpretationRulesConvertedToJAXBRules(interpretationRules));
+		
+		List<MarketRuleFlattedJAXB> marketRulesFJaxB = null ;
+		List<MappingRuleJAXB> mappignRulesJAXB = null;
+		List<InterpretationRuleJAXB> interpretationRulesJAXB = null;
+		
 
-		marketRuleFJaxB = marketRuleService.getAllMarketRule();
-		if (xmlORjson.equals("xml")) {
-			for (MarketRuleFlattedJAXB market : marketRuleFJaxB) {
+		marketRulesFJaxB = new ArrayList<MarketRuleFlattedJAXB>(marketRuleService.getAllMarketRule());
+		mappignRulesJAXB = new ArrayList<MappingRuleJAXB>(mappingRuleService.getAllMappingRule());
+		interpretationRulesJAXB = new ArrayList<InterpretationRuleJAXB>(interpretationRuleService.getAllInterpretationRule());
+		if (xmlORjson.equalsIgnoreCase("xml")) {
+			for (MarketRuleFlattedJAXB market : marketRulesFJaxB) {
 				rules.add(WrapperRuleBuilder.createXMLWrapperRuleFor(market));
 			}
-
-		} else if (xmlORjson.equals("json")) {
-			for (MarketRuleFlattedJAXB market : marketRuleFJaxB) {
-				rules.add(WrapperRuleBuilder.createJSONWrapperRuleFor(market));
-			}
-		}
-
-		mappignRuleJAXB = mappingRuleService.getAllMappingRule();
-		if (xmlORjson.equals("xml")) {
-			for (MappingRuleJAXB mapping : mappignRuleJAXB) {
+			
+			for (MappingRuleJAXB mapping : mappignRulesJAXB) {
 				rules.add(WrapperRuleBuilder.createXMLWrapperRuleFor(mapping));
 			}
-
-		} else if (xmlORjson.equals("json")) {
-			for (MappingRuleJAXB mapping : mappignRuleJAXB) {
-				rules.add(WrapperRuleBuilder
-						.createJSONWrapperRuleFor(mapping));
-			}
-		}
-		
-		interpretationRuleJAXB = interpretationRuleService.getAllInterpretationRule();
-		if (xmlORjson.equals("xml")) {
-			for (InterpretationRuleJAXB interpretation : interpretationRuleJAXB) {
+			
+			for (InterpretationRuleJAXB interpretation : interpretationRulesJAXB) {
 				rules.add(WrapperRuleBuilder.createXMLWrapperRuleFor(interpretation));
 			}
 
-		} else if (xmlORjson.equals("json")) {
-			for (InterpretationRuleJAXB interpretation : interpretationRuleJAXB) {
-				rules.add(WrapperRuleBuilder
-						.createJSONWrapperRuleFor(interpretation));
+		} else if (xmlORjson.equalsIgnoreCase("json")) {
+			for (MarketRuleFlattedJAXB market : marketRulesFJaxB) {
+				rules.add(WrapperRuleBuilder.createJSONWrapperRuleFor(market));
+			}
+			
+			for (MappingRuleJAXB mapping : mappignRulesJAXB) {
+				rules.add(WrapperRuleBuilder.createJSONWrapperRuleFor(mapping));
+			}
+			
+			for (InterpretationRuleJAXB interpretation : interpretationRulesJAXB) {
+				rules.add(WrapperRuleBuilder.createJSONWrapperRuleFor(interpretation));
 			}
 		}
-
 		return rules;
 	}
+	
+	
 	@POST
 	@Path("/{xmlOrJson}/{ruleType}")
 	@Produces({"application/xml", "application/json"})
-	public String getRulesByID(@PathParam("xmlOrJson") String xmlOrJson,
-			@PathParam("ruleType") String ruleType, WrapperRuleJAXB wrapperRuleJAXB) {
+	public String getRulesByID(@PathParam("xmlOrJson") String xmlOrJson, @PathParam("ruleType") String ruleType, WrapperRuleJAXB wrapperRuleJAXB) {
 
 		if (ruleType.equals("market")) {
 			MarketRuleIdJAXB id = new MarketRuleIdJAXB();
@@ -150,11 +170,43 @@ public class RESTfulService {
 			if (xmlOrJson.equals("xml")) {
 				return XmlJsonStringConvertor.getXMLStringForRuleJAXB(interpretationRuleJAXB);
 			} else {
-					return XmlJsonStringConvertor.getJSONStringForRuleJAXB(interpretationRuleJAXB);
+				return XmlJsonStringConvertor.getJSONStringForRuleJAXB(interpretationRuleJAXB);
+			}
+		}	
+		return "NBope";
+	}
+	
+	
+	@GET
+	@Path("/{xmlOrJson}/{ruleType}/{idRule}")
+	@Produces({"application/xml", "application/json"})
+	public String getRulesByID(@PathParam("xmlOrJson") String xmlOrJson, @PathParam("ruleType") String ruleType, @PathParam("idRule") String idRule) {
+
+		if(xmlOrJson.equalsIgnoreCase("xml")){
+			if(ruleType.equalsIgnoreCase("mapping")){
+				MappingRule mappingRule = mappingRuleService.findById(Integer.parseInt(idRule));
+				MappingRuleJAXB mappingRuleJAXB = ModelToJAXBModelConvertor.getMappingRuleJAXB(mappingRule);
+				return XmlJsonStringConvertor.getXMLStringForRuleJAXB(mappingRuleJAXB);
+			}else if(ruleType.equalsIgnoreCase("interpretation")){
+				InterpretationRule interpretationRule = interpretationRuleService.findById(Integer.parseInt(idRule));
+				InterpretationRuleJAXB interpretationRuleJAXB = ModelToJAXBModelConvertor.getInterpretationRuleJAXB(interpretationRule);
+				return XmlJsonStringConvertor.getXMLStringForRuleJAXB(interpretationRuleJAXB);
+			}
+		}else if(xmlOrJson.equalsIgnoreCase("json")){
+			if(ruleType.equalsIgnoreCase("mapping")){
+				MappingRule mappingRule = mappingRuleService.findById(Integer.parseInt(idRule));
+				MappingRuleJAXB mappingRuleJAXB = ModelToJAXBModelConvertor.getMappingRuleJAXB(mappingRule);
+				return XmlJsonStringConvertor.getJSONStringForRuleJAXB(mappingRuleJAXB);
+			}else if(ruleType.equalsIgnoreCase("interpretation")){
+				InterpretationRule interpretationRule = interpretationRuleService.findById(Integer.parseInt(idRule));
+				InterpretationRuleJAXB interpretationRuleJAXB = ModelToJAXBModelConvertor.getInterpretationRuleJAXB(interpretationRule);
+				return XmlJsonStringConvertor.getJSONStringForRuleJAXB(interpretationRuleJAXB);
 			}
 		}
-		return null;
+		return "Nope";
 	}
+	
+	
 
 	// @formatter:on
 
@@ -265,7 +317,7 @@ public class RESTfulService {
 		return Response.status(500).entity("FAILED to add rule").build();
 	}	
 	// @formatter:on
-	
+
 	// @formatter:off
 	@POST
 	@Path("/{xmlOrJson}")

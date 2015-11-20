@@ -1,7 +1,5 @@
 package com.fortech.model;
 
-import java.io.Serializable;
-
 import javax.persistence.*;
 
 
@@ -12,10 +10,10 @@ import javax.persistence.*;
 @Entity
 @Table(name="\"MarketRule\"", schema="DARIAD")
 @NamedQuery(name="MarketRule.findAll", query="SELECT m FROM MarketRule m")
-public class MarketRule implements Serializable {
+public class MarketRule extends BaseRuleModel {
 	
 	private static final long serialVersionUID = 1L;
-	public static final String MARKETRULE_FIND_ALL = "MarketRule.findAll";
+	public static final String FIND_ALL_MARKET_RULE = "MarketRule.findAll";
 
 	@EmbeddedId
 	private MarketRulePK id;
