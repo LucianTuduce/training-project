@@ -13,14 +13,8 @@ import java.util.List;
 @Entity
 @Table(name = "\"InterpretationRule\"", schema="DARIAD")
 @NamedQuery(name = "InterpretationRule.findAll", query = "SELECT i FROM InterpretationRule i")
-public class InterpretationRule extends BaseRuleModel {
+public class InterpretationRule{
 	
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
 	public static final String FIND_ALL_INTERPRETATION_RULE = "InterpretationRule.findAll";
 	
 	@Id
