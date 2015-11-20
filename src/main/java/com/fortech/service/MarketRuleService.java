@@ -77,8 +77,7 @@ public class MarketRuleService {
 		  List<MarketRuleFlattedJAXB> marketRulesFlattedJaxB = new ArrayList<MarketRuleFlattedJAXB>();
 
 		  for (MarketRule rule : marketRules) {
-		   MarketRuleFlattedJAXB marketRuleFJAXB = JAXBRuleConvertor.copyPropertiesFrom(rule);
-		   marketRulesFlattedJaxB.add(marketRuleFJAXB);
+		   marketRulesFlattedJaxB.add(JAXBRuleConvertor.copyPropertiesFrom(rule));
 		  }
 		  return marketRulesFlattedJaxB;
 		 }
@@ -104,24 +103,18 @@ public class MarketRuleService {
 	 * @return he rule that will have the id as the parameter of the method
 	 */
 	public MarketRuleFlattedJAXB getById(MarketRuleIdJAXB id) {
+		MarketRule marketRule = entityManager.find(MarketRule.class, getPKForRule(id));
+					
+		return JAXBRuleConvertor.copyPropertiesFrom(marketRule);
+	}
 
+	private MarketRulePK getPKForRule(MarketRuleIdJAXB id) {
 		MarketRuleFlattener convertor = new MarketRuleFlattener();
 		
 		MarketRulePK pk = new MarketRulePK();
 		pk.setBranch(id.getBranch());
 		pk.setCountryNumber(id.getCountryNumber());
 		pk.setStockCategory(convertor.changeEnumToShort(id.getStockCategory()));
-		
-		MarketRule marketRule = entityManager.find(MarketRule.class, pk);
-			
-		MarketRuleFlattedJAXB marketRuleFlattedJAXB = new MarketRuleFlattedJAXB();
-		
-		marketRuleFlattedJAXB.setActive(convertor.changeShortToBoolean(marketRule.getActive()));
-		marketRuleFlattedJAXB.setBranch(marketRule.getId().getBranch());
-		marketRuleFlattedJAXB.setCountryNumber(marketRule.getId().getCountryNumber());
-		marketRuleFlattedJAXB.setRule(marketRule.getRule());
-		marketRuleFlattedJAXB.setStockCategory(convertor.changeShortToEnum(marketRule.getId().getStockCategory()));
-		
-		return marketRuleFlattedJAXB;
+		return pk;
 	}
 }
