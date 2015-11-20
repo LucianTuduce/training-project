@@ -10,8 +10,7 @@ import javax.persistence.*;
 @Entity
 @Table(name="\"MappingRule\"", schema="DARIAD")
 @NamedQuery(name="MappingRule.findAll", query="SELECT m FROM MappingRule m")
-public class MappingRule extends BaseRuleModel {
-	private static final long serialVersionUID = 1L;
+public class MappingRule {
 	
 	public static final String FIND_ALL_MAPPING_RULE = "MappingRule.findAll";
 

@@ -10,9 +10,8 @@ import javax.persistence.*;
 @Entity
 @Table(name="\"MarketRule\"", schema="DARIAD")
 @NamedQuery(name="MarketRule.findAll", query="SELECT m FROM MarketRule m")
-public class MarketRule extends BaseRuleModel {
+public class MarketRule {
 	
-	private static final long serialVersionUID = 1L;
 	public static final String FIND_ALL_MARKET_RULE = "MarketRule.findAll";
 
 	@EmbeddedId
